@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@import './colors.css';
+@import "./typoTokens.css";
+
+:root {
+  --background: var(--color-gray0);
+  --foreground: var(--color-gray950);
+}
+
+/*=== FONTS === */
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url('/fonts/NanumSquareNeoVariable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@theme {
+  --font-nanumsquareneo: NanumSquareNeo, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply font-nanumsquareneo;
+  }
+}
+
+/* ========== CUSTOM SCROLL BAR ========== */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray200);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+  /* Provide breathing room for the scrollbar: top/bottom 8px, right 4px (design spec). */
+  margin: 8px 4px 8px 0;
+}
+
+/* Firefox 대응 */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,57 @@
+@theme {
+  /* Green */
+  --color-green50: #EAFAF2;
+  --color-green100: #D5F6E4;
+  --color-green200: #ACECCA;
+  --color-green300: #82E3AF;
+  --color-green400: #58DA95;
+  --color-green500: #50D88F;
+  --color-green600: #25A762;
+  --color-green700: #1C7D49;
+  --color-green800: #135331;
+  --color-green900: #092A18;
+  --color-green950: #05150C;
+
+  /* Blue */
+  --color-blue50: #E5F0FF;
+  --color-blue100: #CCE0FF;
+  --color-blue200: #99C2FF;
+  --color-blue300: #66A3FF;
+  --color-blue400: #5398FF;
+  --color-blue500: #3385FF;
+  --color-blue600: #0052CC;
+  --color-blue700: #003D99;
+  --color-blue800: #002966;
+  --color-blue900: #001433;
+  --color-blue950: #000A1A;
+
+  /* Gray */
+  --color-gray0: #FFFFFF;
+  --color-gray50: #F1F2F3;
+  --color-gray100: #E4E6E7;
+  --color-gray200: #C9CCCF;
+  --color-gray300: #AEB3B7;
+  --color-gray400: #939A9F;
+  --color-gray500: #6D676C;
+  --color-gray600: #484D51;
+  --color-gray700: #363A3D;
+  --color-gray800: #303336;
+  --color-gray900: #181A1B;
+  --color-gray950: #0C0D0E;
+
+  /* Etc */
+  --color-kakao: #FEE500;
+  --color-red: #FF3A4A;
+  --color-gray-box: #F6F5FA;
+  --color-ok: #9DD716;
+  --color-orange: #ED9A01;
+  --color-star-yellow: #F6C72B;
+
+  /* Calendar */
+  --color-cal-lightorange: #FEE8D4;
+  --color-cal-orange: #FD8F2A;
+  --color-cal-lightpurple: #EEDDF8;
+  --color-cal-purple: #A954DD;
+  --color-cal-lightpink: #FBE2EB;
+  --color-cal-pink: #EA709C;
+}

@@ -1,0 +1,46 @@
+@layer components {
+  /* title-lg: 24px / 30 - Headline */
+  .title-lg { @apply text-[24px] leading-[30px] font-normal; }
+  .title-lg-bold { @apply text-[24px] leading-[30px] font-bold; }
+  .title-lg-extrabold { @apply text-[24px] leading-[30px] font-extrabold; }
+
+  /* title-md: 20px / 24 - Title */
+  .title-md { @apply text-[20px] leading-[24px] font-normal; }
+  .title-md-bold { @apply text-[20px] leading-[24px] font-bold; }
+  .title-md-extrabold { @apply text-[20px] leading-[24px] font-extrabold; }
+
+  /* title-sm: 18px / 24 - Sub Title */
+  .title-sm { @apply text-[18px] leading-[24px] font-normal; }
+  .title-sm-bold { @apply text-[18px] leading-[24px] font-bold; }
+  .title-sm-extrabold { @apply text-[18px] leading-[24px] font-extrabold; }
+
+  /* text-lg: 16px / 20 - body */
+  .text-lg { @apply text-[16px] leading-[20px] font-normal; }
+  .text-lg-bold { @apply text-[16px] leading-[20px] font-bold; }
+  .text-lg-extrabold { @apply text-[16px] leading-[20px] font-extrabold; }
+
+  /* text-md: 15px / 18 - body */
+  .text-md { @apply text-[15px] leading-[18px] font-normal; }
+  .text-md-bold { @apply text-[15px] leading-[18px] font-bold; }
+  .text-md-extrabold { @apply text-[15px] leading-[18px] font-extrabold; }
+
+  /* text-sm: 14px / 18 - body */
+  .text-sm { @apply text-[14px] leading-[18px] font-normal; }
+  .text-sm-bold { @apply text-[14px] leading-[18px] font-bold; }
+  .text-sm-extrabold { @apply text-[14px] leading-[18px] font-extrabold; }
+
+  /* caption1: 13px / 16 - caption */
+  .caption1 { @apply text-[13px] leading-[16px] font-normal; }
+  .caption1-bold { @apply text-[13px] leading-[16px] font-bold; }
+  .caption1-extrabold { @apply text-[13px] leading-[16px] font-extrabold; }
+
+  /* caption2: 12px / 16 - caption */
+  .caption2 { @apply text-[12px] leading-[16px] font-normal; }
+  .caption2-bold { @apply text-[12px] leading-[16px] font-bold; }
+  .caption2-extrabold { @apply text-[12px] leading-[16px] font-extrabold; }
+
+  /* caption3: 10px / 14 - caption */
+  .caption3 { @apply text-[10px] leading-[14px] font-normal; }
+  .caption3-bold { @apply text-[10px] leading-[14px] font-bold; }
+  .caption3-extrabold { @apply text-[10px] leading-[14px] font-extrabold; }
+}
