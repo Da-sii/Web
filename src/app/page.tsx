@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import HomePage from '../components/pages/Home';
+import HomePage from '../components/pages/Home/Home';
 
 export const metadata: Metadata = {
   title: '다시 - 다이어트 보조제 성분 분석 및 후기 서비스',

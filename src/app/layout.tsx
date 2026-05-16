@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import "@/styles/globals.css";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Header } from "@/components/commons/Header/Header";
+import { BottomBar } from "@/components/commons/BottomBar/BottomBar";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: {
@@ -51,8 +57,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className="relative flex items-center">
+    <html lang="ko" className={cn("font-sans", geist.variable)}>
+      <body className="relative flex items-center bg-green50">
         <aside className="flex h-screen flex-1 items-end">
           <div className="hidden md:flex flex-col items-center w-full justify-center px-6 py-20">
             <div className="relative w-full max-w-46.75 h-13.75">
@@ -95,7 +101,11 @@ export default function RootLayout({
             </div>
           </div>
         </aside>
-        <main className="flex w-full max-w-lg h-screen bg-green50">{children}</main>
+        <main className="flex flex-col w-full max-w-lg h-screen bg-background">
+          <Header />
+          <div className="flex-1 overflow-y-auto">{children}</div>
+          <BottomBar />
+        </main>
         <aside className="flex-1">
 
         </aside>
