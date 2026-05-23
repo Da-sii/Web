@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Next.js auto-generated route/type artifacts (use .next/types instead)
+/src/types/validator.ts
+/src/types/routes.d.ts
+/src/types/cache-life.d.ts
+
+# Claude Code local config
+/.claude/
