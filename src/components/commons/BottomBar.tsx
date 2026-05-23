@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutGrid, Home, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { CategorySheet } from "@/components/commons/CategorySheet/CategorySheet";
+import Icon from "@/components/commons/Icon/Icon";
+import { CategorySheet } from "../CategorySheet";
 
 export function BottomBar() {
   const pathname = usePathname();
@@ -28,7 +28,7 @@ export function BottomBar() {
               : "text-muted-foreground",
           )}
         >
-          <LayoutGrid className="size-5" />
+          <Icon icon="IC_Category" size="lg" />
           <span>카테고리</span>
         </button>
         <Link
@@ -41,7 +41,7 @@ export function BottomBar() {
               : "text-muted-foreground",
           )}
         >
-          <Home className="size-5" />
+          <Icon icon="IC_Home" size="lg" />
           <span>홈</span>
         </Link>
         <Link
@@ -54,7 +54,7 @@ export function BottomBar() {
               : "text-muted-foreground",
           )}
         >
-          <User className="size-5" />
+          <Icon icon="IC_Mypage" size="lg" />
           <span>마이페이지</span>
         </Link>
       </nav>

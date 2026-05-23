@@ -1,13 +1,23 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { banners } from "@/lib/mock-data";
-import { Placeholder } from "@/components/commons/Placeholder/Placeholder";
+import type { Banner } from "@/types/models";
 
-const BANNER_AUTO_INTERVAL_MS = 4000;
+const BANNER_AUTO_INTERVAL_MS = 5000;
+const BANNER_WIDTH_RATIO = 0.85;
+const BANNER_GAP_PX = 12;
 
-export function BannerSlider() {
+interface BannerSliderProps {
+  banners: Banner[];
+}
+
+function getItemStride(el: HTMLDivElement) {
+  return el.clientWidth * BANNER_WIDTH_RATIO + BANNER_GAP_PX;
+}
+
+export function BannerSlider({ banners }: BannerSliderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isProgrammaticScroll = useRef(false);
   const timerRef = useRef<number | null>(null);
@@ -17,11 +27,11 @@ export function BannerSlider() {
 
   const scrollToNext = useCallback(() => {
     const el = containerRef.current;
-    if (!el) return;
+    if (!el || total <= 1) return;
     setCurrentIndex((prev) => {
       const next = (prev + 1) % total;
       isProgrammaticScroll.current = true;
-      el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
+      el.scrollTo({ left: next * getItemStride(el), behavior: "smooth" });
       window.setTimeout(() => {
         isProgrammaticScroll.current = false;
       }, 600);
@@ -33,8 +43,9 @@ export function BannerSlider() {
     if (timerRef.current !== null) {
       window.clearInterval(timerRef.current);
     }
+    if (total <= 1) return;
     timerRef.current = window.setInterval(scrollToNext, BANNER_AUTO_INTERVAL_MS);
-  }, [scrollToNext]);
+  }, [scrollToNext, total]);
 
   useEffect(() => {
     startTimer();
@@ -49,7 +60,7 @@ export function BannerSlider() {
   const handleScroll = () => {
     const el = containerRef.current;
     if (!el) return;
-    const index = Math.round(el.scrollLeft / el.clientWidth);
+    const index = Math.round(el.scrollLeft / getItemStride(el));
     if (index !== currentIndex) {
       setCurrentIndex(index);
     }
@@ -58,31 +69,54 @@ export function BannerSlider() {
     }
   };
 
+  if (total === 0) return null;
+
+  const sidePaddingPct = ((1 - BANNER_WIDTH_RATIO) / 2) * 100;
+
   return (
-    <section className="relative">
+    <section className="relative py-2">
       <div
         ref={containerRef}
         onScroll={handleScroll}
-        className="no-scrollbar flex w-full snap-x snap-mandatory overflow-x-auto"
+        className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto"
+        style={{
+          paddingLeft: `${sidePaddingPct}%`,
+          paddingRight: `${sidePaddingPct}%`,
+          gap: `${BANNER_GAP_PX}px`,
+        }}
       >
-        {banners.map((banner) => (
-          <Link
-            key={banner.id}
-            href={banner.linkUrl}
-            className="block w-full min-w-full flex-shrink-0 snap-start"
-          >
-            <Placeholder
-              label={banner.title}
-              className="aspect-[16/9] w-full"
-            />
-          </Link>
-        ))}
-      </div>
-      <div
-        className="absolute right-3 bottom-3 rounded-full bg-black/60 px-2 py-0.5 text-xs text-white"
-        aria-label={`현재 ${currentIndex + 1}번째 배너, 총 ${total}개`}
-      >
-        {currentIndex + 1}/{total}
+        {banners.map((banner, index) => {
+          const isFocused = index === currentIndex;
+          return (
+            <Link
+              key={banner.id}
+              href={`/banners/${banner.order}`}
+              aria-current={isFocused ? "true" : undefined}
+              className="relative block aspect-square flex-shrink-0 snap-center overflow-hidden rounded-2xl bg-muted transition-transform duration-300"
+              style={{
+                width: `${BANNER_WIDTH_RATIO * 100}%`,
+                transform: isFocused ? "scale(1)" : "scale(0.94)",
+              }}
+            >
+              <Image
+                src={banner.imageUrl}
+                alt={`배너 ${banner.order}`}
+                fill
+                sizes="(max-width: 768px) 85vw, 650px"
+                className="object-cover"
+                priority={index === 0}
+              />
+              {isFocused && (
+                <span
+                  className="absolute top-3 right-3 rounded-full bg-black/50 px-3 py-1 text-xs font-medium text-white"
+                  aria-label={`현재 ${currentIndex + 1}번째 배너, 총 ${total}개`}
+                >
+                  {currentIndex + 1}/{total}
+                </span>
+              )}
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

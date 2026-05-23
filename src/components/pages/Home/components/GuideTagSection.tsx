@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import Icon from "@/components/commons/Icon/Icon";
 import { ingredientGuides } from "@/lib/mock-data";
 
 export function GuideTagSection() {
@@ -10,7 +10,7 @@ export function GuideTagSection() {
         className="flex items-center justify-between px-4"
       >
         <h2 className="text-base font-bold">성분 가이드</h2>
-        <ChevronRight className="size-5 text-muted-foreground" />
+        <Icon icon="IC_ArrowRight" size="lg" className="text-muted-foreground" />
       </Link>
       <div className="flex flex-wrap gap-2 px-4">
         {ingredientGuides.map((guide) => (

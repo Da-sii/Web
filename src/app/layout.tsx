@@ -3,8 +3,9 @@ import Image from "next/image";
 import "@/styles/globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { Header } from "@/components/commons/Header/Header";
-import { BottomBar } from "@/components/commons/BottomBar/BottomBar";
+import { Header } from "@/components/commons/Header";
+import { BottomBar } from "@/components/commons/BottomBar";
+import { Toaster } from "@/components/ui/sonner";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -103,12 +104,13 @@ export default function RootLayout({
         </aside>
         <main className="flex flex-col w-full max-w-lg h-screen bg-background">
           <Header />
-          <div className="flex-1 overflow-y-auto">{children}</div>
+          <div className="no-scrollbar flex-1 overflow-y-auto">{children}</div>
           <BottomBar />
         </main>
         <aside className="flex-1">
 
         </aside>
+        <Toaster position="bottom-center" />
       </body>
     </html>
   );

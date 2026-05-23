@@ -1,19 +1,28 @@
 export interface Banner {
   id: number;
-  title: string;
   imageUrl: string;
-  linkUrl: string;
+  detailImageUrl: string;
+  order: number;
 }
 
-export interface Product {
+export interface RankingProduct {
   id: number;
   name: string;
-  companyName: string;
-  imageUrl: string;
-  rating: number;
+  image: string;
+  company: string;
   reviewCount: number;
-  rank: number;
+  reviewAvg: number | null;
+  rankDiff: number | null;
 }
+
+export interface PaginatedResponse<T> {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: T[];
+}
+
+export type RankingPeriod = "daily" | "monthly";
 
 export interface IngredientGuide {
   id: number;
@@ -25,3 +34,14 @@ export interface CategoryItem {
   name: string;
   linkUrl: string;
 }
+
+export interface SearchProduct {
+  id: number;
+  name: string;
+  image: string;
+  company: string;
+  reviewCount: number;
+  reviewAvg: number | null;
+}
+
+export type SearchSortOption = "monthly_rank" | "review_desc";
