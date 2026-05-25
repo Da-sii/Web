@@ -8,6 +8,7 @@ import { Star, X } from "lucide-react";
 import type { SearchProduct } from "@/types/models";
 import Icon from "@/components/commons/Icon/Icon";
 import { Placeholder } from "@/components/commons/Placeholder";
+import { Button } from "@/components/ui/button";
 
 const RECENT_KEY = "dasii.recent-searches";
 const RECENT_MAX = 10;
@@ -103,13 +104,15 @@ export function SearchPage({ initialWord = "", results = null }: SearchPageProps
             enterKeyHint="search"
             className="h-11 w-full rounded-full border-0 bg-gray50 pr-12 pl-4 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/30"
           />
-          <button
+          <Button
             type="submit"
+            variant="ghost"
+            size="icon-lg"
             aria-label="검색"
-            className="absolute top-1/2 right-1 inline-flex size-9 -translate-y-1/2 items-center justify-center"
+            className="absolute top-1/2 right-1 -translate-y-1/2"
           >
             <Icon icon="IC_Search" size="lg" />
-          </button>
+          </Button>
         </div>
       </form>
 
@@ -140,13 +143,15 @@ function RecentSearches({ recent, onTagClick, onRemove, onClearAll }: RecentSear
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-bold">최근 검색</h2>
         {recent.length > 0 && (
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="xs"
             onClick={onClearAll}
-            className="text-xs text-muted-foreground hover:text-foreground"
+            className="px-0 text-xs text-muted-foreground hover:text-foreground"
           >
             전체삭제
-          </button>
+          </Button>
         )}
       </div>
       {recent.length === 0 ? (
@@ -158,21 +163,25 @@ function RecentSearches({ recent, onTagClick, onRemove, onClearAll }: RecentSear
           {recent.map((text) => (
             <li key={text}>
               <div className="inline-flex items-center gap-1.5 rounded-full bg-gray50 py-1.5 pr-2 pl-3 text-sm">
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="xs"
                   onClick={() => onTagClick(text)}
-                  className="line-clamp-1 max-w-[160px] text-left"
+                  className="line-clamp-1 h-auto max-w-[160px] justify-start px-0 text-sm font-normal"
                 >
                   {text}
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="icon-xs"
                   onClick={() => onRemove(text)}
                   aria-label={`${text} 삭제`}
-                  className="inline-flex size-4 items-center justify-center text-muted-foreground hover:text-foreground"
+                  className="size-4 text-muted-foreground hover:text-foreground"
                 >
                   <X className="size-3" />
-                </button>
+                </Button>
               </div>
             </li>
           ))}
