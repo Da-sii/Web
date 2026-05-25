@@ -1,12 +1,18 @@
-export default async function IngredientGuideDetailPage({
+import { notFound } from "next/navigation";
+import { fetchIngredientGuideDetail } from "@/lib/api";
+import { IngredientGuideDetailPage } from "@/components/pages/IngredientGuides/IngredientGuideDetailPage";
+
+export default async function Page({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  return (
-    <section className="p-6">
-      <h1 className="text-lg font-bold">성분 {id} 상세</h1>
-    </section>
-  );
+  const parsedId = Number(id);
+  if (!Number.isFinite(parsedId) || parsedId <= 0) {
+    notFound();
+  }
+
+  const guide = await fetchIngredientGuideDetail(parsedId);
+  return <IngredientGuideDetailPage guide={guide} />;
 }

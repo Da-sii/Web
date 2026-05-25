@@ -29,6 +29,16 @@ export interface IngredientGuide {
   name: string;
 }
 
+export interface IngredientGuideDetail {
+  id: number;
+  ingredientId: string;
+  name: string;
+  mainIngredients: string;
+  keyPoints: string;
+  sources: string;
+  productCount: string;
+}
+
 export interface CategoryItem {
   id: number;
   name: string;

@@ -13,7 +13,7 @@ const BANNER_DETAIL_PATTERN = /^\/banners\/[^/]+$/;
 const SEARCH_PATTERN = /^\/search(?:\/.*)?$/;
 const TERMS_DETAIL_PATTERN = /^\/terms\/([^/]+)$/;
 const INQUIRY_PATTERN = /^\/inquiry(?:\/.*)?$/;
-const INGREDIENT_GUIDES_LIST_PATTERN = /^\/ingredients\/guides\/?$/;
+const INGREDIENT_GUIDES_PATTERN = /^\/ingredients\/guides(?:\/[^/]+)?\/?$/;
 
 export function Header() {
   const pathname = usePathname();
@@ -38,7 +38,7 @@ export function Header() {
     );
   }
 
-  if (pathname && INGREDIENT_GUIDES_LIST_PATTERN.test(pathname)) {
+  if (pathname && INGREDIENT_GUIDES_PATTERN.test(pathname)) {
     return (
       <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center bg-background px-4">
         <Button

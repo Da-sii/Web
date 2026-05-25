@@ -1,6 +1,7 @@
 import type {
   Banner,
   IngredientGuide,
+  IngredientGuideDetail,
   PaginatedResponse,
   RankingPeriod,
   RankingProduct,
@@ -128,6 +129,35 @@ export async function fetchIngredientGuides(
     next: data.next,
     previous: data.previous,
     results: data.results.map((g) => ({ id: g.id, name: g.ingredient_name })),
+  };
+}
+
+export async function fetchIngredientGuideDetail(
+  id: number,
+): Promise<IngredientGuideDetail> {
+  const res = await fetch(buildUrl(`/ingredients/guides/${id}/`), {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch ingredient guide detail: ${res.status}`);
+  }
+  const data: {
+    id: number;
+    ingredient_id: string;
+    name: string;
+    mainIngredients: string;
+    keyPoints: string;
+    sources: string;
+    productCount: string;
+  } = await res.json();
+  return {
+    id: data.id,
+    ingredientId: data.ingredient_id,
+    name: data.name,
+    mainIngredients: data.mainIngredients,
+    keyPoints: data.keyPoints,
+    sources: data.sources,
+    productCount: data.productCount,
   };
 }
 
