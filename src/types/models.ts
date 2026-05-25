@@ -34,9 +34,9 @@ export interface IngredientGuideDetail {
   ingredientId: string;
   name: string;
   mainIngredients: string;
-  keyPoints: string;
-  sources: string;
-  productCount: string;
+  keyPoints: string[];
+  sources: string[];
+  productCount: number;
 }
 
 export interface CategoryItem {

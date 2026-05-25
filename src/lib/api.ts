@@ -146,18 +146,30 @@ export async function fetchIngredientGuideDetail(
     ingredient_id: string;
     name: string;
     mainIngredients: string;
-    keyPoints: string;
-    sources: string;
-    productCount: string;
+    keyPoints: string | string[];
+    sources: string | string[];
+    productCount: string | number;
   } = await res.json();
+  const keyPoints = Array.isArray(data.keyPoints)
+    ? data.keyPoints
+    : typeof data.keyPoints === "string"
+      ? data.keyPoints.split(/\r?\n/)
+      : [];
+  const sources = Array.isArray(data.sources)
+    ? data.sources
+    : typeof data.sources === "string"
+      ? data.sources.split(/\r?\n/)
+      : [];
   return {
     id: data.id,
     ingredientId: data.ingredient_id,
     name: data.name,
     mainIngredients: data.mainIngredients,
-    keyPoints: data.keyPoints,
-    sources: data.sources,
-    productCount: data.productCount,
+    keyPoints: keyPoints
+      .map((p) => p.replace(/^\s*[-•·*]\s*/, "").trim())
+      .filter((p) => p.length > 0),
+    sources: sources.map((s) => s.trim()).filter((s) => s.length > 0),
+    productCount: Number(data.productCount) || 0,
   };
 }
 
