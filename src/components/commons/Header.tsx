@@ -13,6 +13,7 @@ const BANNER_DETAIL_PATTERN = /^\/banners\/[^/]+$/;
 const SEARCH_PATTERN = /^\/search(?:\/.*)?$/;
 const TERMS_DETAIL_PATTERN = /^\/terms\/([^/]+)$/;
 const INQUIRY_PATTERN = /^\/inquiry(?:\/.*)?$/;
+const INGREDIENT_GUIDES_LIST_PATTERN = /^\/ingredients\/guides\/?$/;
 
 export function Header() {
   const pathname = usePathname();
@@ -32,6 +33,34 @@ export function Header() {
           className="justify-self-end"
         >
           <X className="size-5" />
+        </Button>
+      </header>
+    );
+  }
+
+  if (pathname && INGREDIENT_GUIDES_LIST_PATTERN.test(pathname)) {
+    return (
+      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center bg-background px-4">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          aria-label="뒤로가기"
+          className="justify-self-start"
+        >
+          <Icon icon="IC_ArrowLeft" size="md" />
+        </Button>
+        <h1 className="justify-self-center text-base font-semibold">성분 가이드</h1>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.push("/")}
+          aria-label="홈으로 이동"
+          className="justify-self-end"
+        >
+          <Icon icon="IC_Home" size="md" />
         </Button>
       </header>
     );

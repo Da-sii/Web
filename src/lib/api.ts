@@ -1,5 +1,6 @@
 import type {
   Banner,
+  IngredientGuide,
   PaginatedResponse,
   RankingPeriod,
   RankingProduct,
@@ -100,6 +101,34 @@ export async function searchProducts(
     throw new Error(`Failed to search products: ${res.status}`);
   }
   return res.json();
+}
+
+export const INGREDIENT_GUIDES_PAGE_SIZE = 10;
+
+export interface FetchIngredientGuidesParams {
+  search?: string;
+  page?: number;
+}
+
+export async function fetchIngredientGuides(
+  params: FetchIngredientGuidesParams = {},
+): Promise<PaginatedResponse<IngredientGuide>> {
+  const { search, page } = params;
+  const res = await fetch(
+    buildUrl("/ingredients/guides/", { search, page }),
+    { next: { revalidate: 60 } },
+  );
+  if (!res.ok) {
+    throw new Error(`Failed to fetch ingredient guides: ${res.status}`);
+  }
+  const data: PaginatedResponse<{ id: number; ingredient_name: string }> =
+    await res.json();
+  return {
+    count: data.count,
+    next: data.next,
+    previous: data.previous,
+    results: data.results.map((g) => ({ id: g.id, name: g.ingredient_name })),
+  };
 }
 
 export type AdvertisementInquiryType = "domestic" | "global" | "other";
