@@ -31,10 +31,10 @@ export function Bottom() {
         </dl>
       </ArrowToggle>
       <div className="flex gap-3 text-xs underline text-gray-600">
-        <Link href="">서비스 이용 약관</Link>
-        <Link href="">개인정보 처리방침</Link>
-        <Link href="">리뷰운영정책</Link>
-        <Link href="">광고/제휴 문의</Link>
+        <Link href="/terms/footerService">서비스 이용 약관</Link>
+        <Link href="/terms/footerPrivacyUsage">개인정보 처리방침</Link>
+        <Link href="/terms/footerReviewPolicy">리뷰운영정책</Link>
+        <Link href="/inquiry">광고/제휴 문의</Link>
       </div>
     </footer>
   )

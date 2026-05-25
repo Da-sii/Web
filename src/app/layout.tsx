@@ -5,6 +5,7 @@ import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/commons/Header";
 import { BottomBar } from "@/components/commons/BottomBar";
+import { ScrollArea } from "@/components/commons/ScrollArea";
 import { Toaster } from "@/components/ui/sonner";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -104,7 +105,7 @@ export default function RootLayout({
         </aside>
         <main className="flex flex-col w-full max-w-lg h-screen bg-background">
           <Header />
-          <div className="no-scrollbar flex-1 overflow-y-auto">{children}</div>
+          <ScrollArea>{children}</ScrollArea>
           <BottomBar />
         </main>
         <aside className="flex-1">

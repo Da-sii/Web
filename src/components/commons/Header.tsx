@@ -6,9 +6,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Icon from "@/components/commons/Icon/Icon";
 import { Button } from "@/components/ui/button";
+import { getTermById } from "@/lib/terms";
 
 const BANNER_DETAIL_PATTERN = /^\/banners\/[^/]+$/;
 const SEARCH_PATTERN = /^\/search(?:\/.*)?$/;
+const TERMS_DETAIL_PATTERN = /^\/terms\/([^/]+)$/;
 
 export function Header() {
   const pathname = usePathname();
@@ -28,6 +30,29 @@ export function Header() {
           <Icon icon="IC_ArrowLeft" size="md" />
         </Button>
         <h1 className="justify-self-center text-base font-semibold">검색</h1>
+        <span aria-hidden className="justify-self-end" />
+      </header>
+    );
+  }
+
+  const termsMatch = pathname?.match(TERMS_DETAIL_PATTERN);
+  if (termsMatch) {
+    const term = getTermById(termsMatch[1]);
+    return (
+      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center border-b bg-background px-4">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          aria-label="뒤로가기"
+          className="justify-self-start"
+        >
+          <Icon icon="IC_ArrowLeft" size="md" />
+        </Button>
+        <h1 className="justify-self-center text-base font-semibold">
+          {term?.title ?? ""}
+        </h1>
         <span aria-hidden className="justify-self-end" />
       </header>
     );
