@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { X } from "lucide-react";
 import { toast } from "sonner";
 import Icon from "@/components/commons/Icon/Icon";
 import { Button } from "@/components/ui/button";
@@ -11,10 +12,30 @@ import { getTermById } from "@/lib/terms";
 const BANNER_DETAIL_PATTERN = /^\/banners\/[^/]+$/;
 const SEARCH_PATTERN = /^\/search(?:\/.*)?$/;
 const TERMS_DETAIL_PATTERN = /^\/terms\/([^/]+)$/;
+const INQUIRY_PATTERN = /^\/inquiry(?:\/.*)?$/;
 
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
+
+  if (pathname && INQUIRY_PATTERN.test(pathname)) {
+    return (
+      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center bg-background px-4">
+        <span aria-hidden className="justify-self-start" />
+        <h1 className="justify-self-center text-base font-semibold">광고/제휴 문의</h1>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          aria-label="닫기"
+          className="justify-self-end"
+        >
+          <X className="size-5" />
+        </Button>
+      </header>
+    );
+  }
 
   if (pathname && SEARCH_PATTERN.test(pathname)) {
     return (

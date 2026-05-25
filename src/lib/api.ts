@@ -101,3 +101,33 @@ export async function searchProducts(
   }
   return res.json();
 }
+
+export type AdvertisementInquiryType = "domestic" | "global" | "other";
+export type AdvertisementLaunchStatus =
+  | "launched"
+  | "within_1_month"
+  | "within_3_months"
+  | "over_3_months";
+
+export interface AdvertisementInquiryPayload {
+  inquiry_type: AdvertisementInquiryType;
+  brand_name: string;
+  launch_status: AdvertisementLaunchStatus;
+  inquiry_content: string;
+  name: string;
+  contact_number: string;
+  email: string;
+}
+
+export async function submitAdvertisementInquiry(
+  payload: AdvertisementInquiryPayload,
+): Promise<void> {
+  const res = await fetch(buildUrl("/auth/advertisement/"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to submit advertisement inquiry: ${res.status}`);
+  }
+}
