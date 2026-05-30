@@ -1,25 +1,7 @@
-"use client";
-
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-
 interface ScrollAreaProps {
   children: React.ReactNode;
 }
 
 export function ScrollArea({ children }: ScrollAreaProps) {
-  const pathname = usePathname();
-  const showScrollbar = pathname?.startsWith("/terms/") ?? false;
-
-  return (
-    <div
-      data-scroll-root
-      className={cn(
-        "flex-1 overflow-y-auto",
-        showScrollbar ? "custom-scrollbar" : "no-scrollbar",
-      )}
-    >
-      {children}
-    </div>
-  );
+  return <div className="flex-1">{children}</div>;
 }

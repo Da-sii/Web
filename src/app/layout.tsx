@@ -60,8 +60,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={cn("font-sans", geist.variable)}>
-      <body className="relative flex items-center bg-green50">
-        <aside className="flex h-screen flex-1 items-end">
+      <body className="relative flex items-start bg-green50">
+        <aside className="sticky top-0 flex h-screen flex-1 items-end">
           <div className="hidden md:flex flex-col items-center w-full justify-center px-6 py-20">
             <div className="relative w-full max-w-46.75 h-13.75">
               <Image
@@ -103,14 +103,12 @@ export default function RootLayout({
             </div>
           </div>
         </aside>
-        <main className="flex flex-col w-full max-w-lg h-screen bg-background">
+        <main className="flex flex-col w-full max-w-lg min-h-screen bg-background">
           <Header />
           <ScrollArea>{children}</ScrollArea>
           <BottomBar />
         </main>
-        <aside className="flex-1">
-
-        </aside>
+        <aside className="sticky top-0 h-screen flex-1" />
         <Toaster position="bottom-center" />
       </body>
     </html>
