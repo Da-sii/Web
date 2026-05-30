@@ -14,6 +14,7 @@ const SEARCH_PATTERN = /^\/search(?:\/.*)?$/;
 const TERMS_DETAIL_PATTERN = /^\/terms\/([^/]+)$/;
 const INQUIRY_PATTERN = /^\/inquiry(?:\/.*)?$/;
 const INGREDIENT_GUIDES_PATTERN = /^\/ingredients\/guides(?:\/[^/]+)?\/?$/;
+const PRODUCT_DETAIL_PATTERN = /^\/products\/[^/]+$/;
 
 export function Header() {
   const pathname = usePathname();
@@ -34,6 +35,42 @@ export function Header() {
         >
           <X className="size-5" />
         </Button>
+      </header>
+    );
+  }
+
+  if (pathname && PRODUCT_DETAIL_PATTERN.test(pathname)) {
+    return (
+      <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between bg-background px-4">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          aria-label="뒤로가기"
+        >
+          <Icon icon="IC_ArrowLeft" size="md" />
+        </Button>
+        <div className="flex items-center gap-1">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push("/search")}
+            aria-label="검색"
+          >
+            <Icon icon="IC_Search" size="md" />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => router.push("/")}
+            aria-label="홈으로 이동"
+          >
+            <Icon icon="IC_Home" size="md" />
+          </Button>
+        </div>
       </header>
     );
   }

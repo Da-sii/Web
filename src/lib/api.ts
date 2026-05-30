@@ -3,6 +3,7 @@ import type {
   IngredientGuide,
   IngredientGuideDetail,
   PaginatedResponse,
+  ProductDetail,
   RankingPeriod,
   RankingProduct,
   SearchProduct,
@@ -100,6 +101,20 @@ export async function searchProducts(
   );
   if (!res.ok) {
     throw new Error(`Failed to search products: ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function fetchProductDetail(
+  id: number,
+): Promise<ProductDetail | null> {
+  const res = await fetch(buildUrl(`/products/${id}/`), {
+    headers: { Accept: "application/json" },
+    next: { revalidate: 60 },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    throw new Error(`Failed to fetch product detail: ${res.status}`);
   }
   return res.json();
 }

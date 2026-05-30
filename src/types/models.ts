@@ -55,3 +55,47 @@ export interface SearchProduct {
 }
 
 export type SearchSortOption = "monthly_rank" | "review_desc";
+
+export interface ProductImage {
+  url: string;
+}
+
+export interface ProductIngredient {
+  ingredientName: string;
+  mainIngredient: string;
+  amount: string;
+  minRecommended: string;
+  maxRecommended: string;
+  effect: string[];
+  sideEffect: string[];
+  status: string;
+  guideId: string | null;
+}
+
+export interface OtherIngredient {
+  otherIngredientName: string;
+}
+
+export interface ProductRanking {
+  bigCategory: string;
+  smallCategory: string;
+  monthlyRank: number;
+}
+
+export interface ProductDetail {
+  id: number;
+  name: string;
+  company: string;
+  productType: string;
+  coupang: string;
+  isMyReview: boolean;
+  reviewCount: number;
+  reviewAvg: number | null;
+  ranking: ProductRanking[];
+  images: ProductImage[];
+  reviewImages: ProductImage[];
+  ingredientsCount: number;
+  ingredients: ProductIngredient[];
+  otherIngredientsCount: number;
+  otherIngredients: OtherIngredient[];
+}

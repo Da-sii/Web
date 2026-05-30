@@ -19,6 +19,10 @@ export function BottomBar() {
     return null;
   }
 
+  if (/^\/products\/[^/]+$/.test(pathname)) {
+    return null;
+  }
+
   return (
     <>
       <nav className="sticky bottom-0 z-40 flex h-16 w-full items-center justify-around border-t bg-background">
