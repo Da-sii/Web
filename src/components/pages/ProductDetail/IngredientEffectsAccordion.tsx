@@ -35,17 +35,17 @@ export function IngredientEffectsAccordion({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mt-3 flex flex-col">
+    <div className="flex flex-col">
       <button
         type="button"
         onClick={() => setOpen((p) => !p)}
         aria-expanded={open}
-        className="flex items-center justify-center gap-1 self-center px-2 py-1 text-xs text-gray-500"
+        className="flex w-full items-center justify-between text-sm font-semibold"
       >
         <span>효과 및 부작용 알아보기</span>
         <Icon
           icon="IC_ArrowBottom"
-          size="xs"
+          size="sm"
           className={cn("transition-transform", open && "rotate-180")}
         />
       </button>

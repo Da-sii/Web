@@ -106,26 +106,15 @@ export function Header() {
         >
           <Icon icon="IC_ArrowLeft" size="md" />
         </Button>
-        <div className="flex items-center gap-1">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => router.push("/search")}
-            aria-label="검색"
-          >
-            <Icon icon="IC_Search" size="md" />
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => router.push("/")}
-            aria-label="홈으로 이동"
-          >
-            <Icon icon="IC_Home" size="md" />
-          </Button>
-        </div>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.push("/")}
+          aria-label="홈으로 이동"
+        >
+          <Icon icon="IC_Home" size="md" />
+        </Button>
       </header>
     );
   }

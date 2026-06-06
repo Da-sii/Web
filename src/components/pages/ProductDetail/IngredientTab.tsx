@@ -3,6 +3,7 @@
 import { Info } from "lucide-react";
 import type { ProductDetail } from "@/types/models";
 import { IngredientCard } from "./IngredientCard";
+import { IngredientEffectsAccordion } from "./IngredientEffectsAccordion";
 import { OtherIngredientsSection } from "./OtherIngredientsSection";
 import { InfoDialog } from "./InfoDialog";
 
@@ -39,7 +40,15 @@ export function IngredientTab({ product }: IngredientTabProps) {
 
           <div className="flex flex-col gap-3">
             {product.ingredients.map((ing, idx) => (
-              <IngredientCard key={idx} ingredient={ing} />
+              <div key={idx} className="flex flex-col gap-2">
+                <IngredientCard ingredient={ing} />
+                <div className="rounded-2xl bg-[#F6F5FA] px-4 py-4">
+                  <IngredientEffectsAccordion
+                    effects={ing.effect ?? []}
+                    sideEffects={ing.sideEffect ?? []}
+                  />
+                </div>
+              </div>
             ))}
           </div>
         </section>

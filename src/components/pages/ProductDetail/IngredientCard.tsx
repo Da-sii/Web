@@ -10,7 +10,6 @@ import {
 } from "@/lib/format";
 import type { ProductIngredient } from "@/types/models";
 import { IngredientDonut } from "./IngredientDonut";
-import { IngredientEffectsAccordion } from "./IngredientEffectsAccordion";
 import { GuideUnavailableDialog } from "./GuideUnavailableDialog";
 
 const STATUS_BG: Record<IngredientStatus, string> = {
@@ -34,7 +33,7 @@ function StatusTag({ status }: { status: IngredientStatus }) {
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="rounded-full bg-white px-2 py-0.5 text-[11px] font-semibold text-gray-500">
+    <span className="rounded-full bg-gray100 px-2 py-0.5 text-[11px] font-semibold text-gray-500">
       {children}
     </span>
   );
@@ -102,7 +101,7 @@ export function IngredientCard({ ingredient }: IngredientCardProps) {
         </div>
 
         <div className="flex w-[88px] flex-col items-center gap-1">
-          <span className="flex items-center gap-0.5 rounded-full bg-white px-1.5 py-0.5 text-[9px] text-gray-500">
+          <span className="flex items-center gap-0.5 rounded-full bg-gray100 px-1.5 py-0.5 text-[9px] text-gray-500">
             주성분 포함량
             <span aria-hidden>▾</span>
           </span>
@@ -113,11 +112,6 @@ export function IngredientCard({ ingredient }: IngredientCardProps) {
           />
         </div>
       </div>
-
-      <IngredientEffectsAccordion
-        effects={ingredient.effect ?? []}
-        sideEffects={ingredient.sideEffect ?? []}
-      />
     </div>
   );
 }

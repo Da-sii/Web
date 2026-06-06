@@ -23,13 +23,13 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
         >
           <TabsTrigger
             value="ingredient"
-            className="h-full rounded-none border-b-2 border-transparent text-sm font-semibold text-muted-foreground data-[state=active]:border-foreground data-[state=active]:text-foreground"
+            className="h-full rounded-none text-sm font-semibold text-muted-foreground after:bottom-0 data-[state=active]:after:opacity-100 data-[state=active]:text-foreground"
           >
             성분 정보
           </TabsTrigger>
           <TabsTrigger
             value="review"
-            className="h-full rounded-none border-b-2 border-transparent text-sm font-semibold text-muted-foreground data-[state=active]:border-foreground data-[state=active]:text-foreground"
+            className="h-full rounded-none text-sm font-semibold text-muted-foreground after:bottom-0 data-[state=active]:after:opacity-100 data-[state=active]:text-foreground"
           >
             리뷰
           </TabsTrigger>
