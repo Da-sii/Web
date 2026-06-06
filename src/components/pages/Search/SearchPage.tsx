@@ -93,15 +93,25 @@ export function SearchPage({ initialWord = "", results = null }: SearchPageProps
       <form onSubmit={handleSubmit} className="px-4 pt-3 pb-2">
         <div className="relative">
           <input
-            type="search"
+            type="text"
             value={word}
             onChange={(e) => setWord(e.target.value)}
             placeholder="성분, 제품명으로 검색해보세요"
             aria-label="검색어"
             autoFocus
             enterKeyHint="search"
-            className="h-11 w-full rounded-full border-0 bg-gray50 pr-12 pl-4 text-sm outline-none placeholder:text-gray300 focus-visible:ring-2 focus-visible:ring-ring/30"
+            className="h-11 w-full rounded-full border-0 bg-gray50 pr-20 pl-4 text-sm outline-none placeholder:text-gray300 focus-visible:ring-2 focus-visible:ring-ring/30"
           />
+          {word && (
+            <button
+              type="button"
+              onClick={() => setWord("")}
+              aria-label="검색어 지우기"
+              className="absolute top-1/2 right-11 -translate-y-1/2 flex size-5 items-center justify-center rounded-full bg-gray300"
+            >
+              <X className="size-3 text-gray50" />
+            </button>
+          )}
           <Button
             type="submit"
             variant="ghost"
@@ -146,7 +156,7 @@ function RecentSearches({ recent, onTagClick, onRemove, onClearAll }: RecentSear
             variant="ghost"
             size="xs"
             onClick={onClearAll}
-            className="px-0 text-xs text-muted-foreground hover:text-foreground"
+            className="px-0 text-xs text-gray500 hover:text-foreground"
           >
             전체삭제
           </Button>
@@ -160,7 +170,7 @@ function RecentSearches({ recent, onTagClick, onRemove, onClearAll }: RecentSear
         <ul className="flex flex-wrap gap-2">
           {recent.map((text) => (
             <li key={text}>
-              <div className="inline-flex items-center gap-1.5 rounded-full bg-gray50 py-1.5 pr-2 pl-3 text-sm">
+              <div className="inline-flex items-center gap-1.5 rounded-full py-1.5 pr-1 pl-3 text-sm">
                 <Button
                   type="button"
                   variant="ghost"
@@ -176,9 +186,9 @@ function RecentSearches({ recent, onTagClick, onRemove, onClearAll }: RecentSear
                   size="icon-xs"
                   onClick={() => onRemove(text)}
                   aria-label={`${text} 삭제`}
-                  className="size-4 text-muted-foreground hover:text-foreground"
+                  className="size-5 text-muted-foreground hover:text-foreground"
                 >
-                  <X className="size-3" />
+                  <X className="size-4" />
                 </Button>
               </div>
             </li>
