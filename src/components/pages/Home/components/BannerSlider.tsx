@@ -8,7 +8,7 @@ import type { Banner } from "@/types/models";
 const BANNER_AUTO_INTERVAL_MS = 5000;
 const BANNER_WIDTH_RATIO = 0.85;
 const BANNER_GAP_PX = 12;
-const SCROLL_SETTLE_MS = 600;
+const SCROLL_SETTLE_FALLBACK_MS = 1200;
 
 interface BannerSliderProps {
   banners: Banner[];
@@ -74,24 +74,29 @@ export function BannerSlider({ banners }: BannerSliderProps) {
       clearSettleTimer();
       isProgrammaticScroll.current = true;
       setDisplay(targetDisplayIdx);
-      el.scrollTo({ left: targetDisplayIdx * getItemStride(el), behavior: "smooth" });
 
-      if (targetDisplayIdx === total + 1) {
-        // Animated to clone of first → teleport to real first
-        settleTimerRef.current = window.setTimeout(() => {
-          teleportTo(1);
-        }, SCROLL_SETTLE_MS);
-      } else if (targetDisplayIdx === 0) {
-        // Animated to clone of last → teleport to real last
-        settleTimerRef.current = window.setTimeout(() => {
-          teleportTo(total);
-        }, SCROLL_SETTLE_MS);
-      } else {
-        settleTimerRef.current = window.setTimeout(() => {
+      const needsTeleport = targetDisplayIdx === total + 1 || targetDisplayIdx === 0;
+      const teleportTarget = targetDisplayIdx === total + 1 ? 1 : total;
+
+      const onSettle = () => {
+        if (needsTeleport) {
+          teleportTo(teleportTarget);
+        } else {
           isProgrammaticScroll.current = false;
           settleTimerRef.current = null;
-        }, SCROLL_SETTLE_MS);
-      }
+        }
+      };
+
+      // scrollend fires when smooth scroll animation actually completes
+      el.addEventListener("scrollend", onSettle, { once: true });
+
+      el.scrollTo({ left: targetDisplayIdx * getItemStride(el), behavior: "smooth" });
+
+      // Fallback: if scrollend doesn't fire (older browsers / snap override), force settle
+      settleTimerRef.current = window.setTimeout(() => {
+        el.removeEventListener("scrollend", onSettle);
+        onSettle();
+      }, SCROLL_SETTLE_FALLBACK_MS);
     },
     [setDisplay, teleportTo, total],
   );

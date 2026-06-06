@@ -238,7 +238,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between border-b bg-background px-4">
+    <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between bg-background px-4">
       <Link href="/" aria-label="홈으로 이동">
         <Image
           src="/images/logo.png"

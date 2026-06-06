@@ -30,7 +30,7 @@ export function RankingCard({ product, rank }: RankingCardProps) {
         ) : (
           <Placeholder label={product.name} className="absolute inset-0" />
         )}
-        <span className="absolute top-1 left-1 rounded-md bg-green500 px-1.5 py-0.5 text-xs font-semibold text-white">
+        <span className={`absolute top-1.5 left-1.5 flex h-6 w-6 items-center justify-center rounded-lg text-xs font-bold text-white ${rank <= 3 ? "bg-green500" : "bg-gray400"}`}>
           {rank}
         </span>
       </div>
