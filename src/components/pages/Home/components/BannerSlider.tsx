@@ -6,8 +6,8 @@ import Link from "next/link";
 import type { Banner } from "@/types/models";
 
 const BANNER_AUTO_INTERVAL_MS = 5000;
-const BANNER_WIDTH_RATIO = 0.85;
-const BANNER_GAP_PX = 12;
+const BANNER_WIDTH_RATIO = 0.90;
+const BANNER_GAP_PX = 8;
 const SCROLL_SETTLE_FALLBACK_MS = 1200;
 
 interface BannerSliderProps {
@@ -202,7 +202,7 @@ export function BannerSlider({ banners }: BannerSliderProps) {
               className="relative block aspect-square flex-shrink-0 snap-center overflow-hidden rounded-2xl bg-muted transition-transform duration-300"
               style={{
                 width: `${BANNER_WIDTH_RATIO * 100}%`,
-                transform: isFocused ? "scale(1)" : "scale(0.80)",
+                transform: isFocused ? undefined : "scale(0.80)",
               }}
             >
               <Image
