@@ -5,15 +5,40 @@ export interface Banner {
   order: number;
 }
 
-export interface RankingProduct {
+export interface Product {
   id: number;
   name: string;
   image: string;
   company: string;
   reviewCount: number;
   reviewAvg: number | null;
+}
+
+export interface RankingProduct extends Product {
   rankDiff: number | null;
 }
+
+export interface MiddleCategory {
+  category: string;
+  smallCategories: string[];
+}
+
+export interface Category {
+  category: string;
+  middleCategories: MiddleCategory[];
+}
+
+export interface RankingCategoryItem {
+  bigCategory: string;
+  middleCategory: string;
+  smallCategory: string;
+}
+
+export interface RankingCategories {
+  topSmallCategories: RankingCategoryItem[];
+}
+
+export type ProductSortOption = "monthly_rank" | "review_desc";
 
 export interface PaginatedResponse<T> {
   count: number;

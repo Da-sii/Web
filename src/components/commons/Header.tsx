@@ -15,10 +15,65 @@ const TERMS_DETAIL_PATTERN = /^\/terms\/([^/]+)$/;
 const INQUIRY_PATTERN = /^\/inquiry(?:\/.*)?$/;
 const INGREDIENT_GUIDES_PATTERN = /^\/ingredients\/guides(?:\/[^/]+)?\/?$/;
 const PRODUCT_DETAIL_PATTERN = /^\/products\/[^/]+$/;
+const CATEGORY_PATTERN = /^\/category(?:\/.*)?$/;
+const RANKING_PATTERN = /^\/ranking(?:\/.*)?$/;
+const PRODUCTS_LIST_PATTERN = /^\/products\/?$/;
 
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
+
+  if (pathname && CATEGORY_PATTERN.test(pathname)) {
+    return (
+      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center border-b bg-background px-4">
+        <span aria-hidden className="justify-self-start" />
+        <h1 className="justify-self-center text-base font-semibold">카테고리</h1>
+        <Link href="/search" aria-label="검색" className="justify-self-end">
+          <Icon icon="IC_Search" size="md" />
+        </Link>
+      </header>
+    );
+  }
+
+  if (pathname && RANKING_PATTERN.test(pathname)) {
+    return (
+      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center border-b bg-background px-4">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          aria-label="뒤로가기"
+          className="justify-self-start"
+        >
+          <Icon icon="IC_ArrowLeft" size="md" />
+        </Button>
+        <h1 className="justify-self-center text-base font-semibold">랭킹</h1>
+        <Link href="/search" aria-label="검색" className="justify-self-end">
+          <Icon icon="IC_Search" size="md" />
+        </Link>
+      </header>
+    );
+  }
+
+  if (pathname && PRODUCTS_LIST_PATTERN.test(pathname)) {
+    return (
+      <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between border-b bg-background px-4">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          aria-label="뒤로가기"
+        >
+          <Icon icon="IC_ArrowLeft" size="md" />
+        </Button>
+        <Link href="/search" aria-label="검색">
+          <Icon icon="IC_Search" size="md" />
+        </Link>
+      </header>
+    );
+  }
 
   if (pathname && INQUIRY_PATTERN.test(pathname)) {
     return (

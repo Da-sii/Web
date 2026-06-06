@@ -18,7 +18,7 @@ interface RankingSectionProps {
 export function RankingSection({
   products,
   title = "월간 랭킹",
-  href = "/products?period=monthly",
+  href = "/ranking?period=monthly",
 }: RankingSectionProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const dragStateRef = useRef({

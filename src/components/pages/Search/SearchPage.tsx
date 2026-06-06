@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Star, X } from "lucide-react";
-import type { SearchProduct } from "@/types/models";
+import { X } from "lucide-react";
+import type { Product, SearchProduct } from "@/types/models";
 import Icon from "@/components/commons/Icon/Icon";
-import { Placeholder } from "@/components/commons/Placeholder";
+import { ProductListRow } from "@/components/commons/ProductListRow";
 import { Button } from "@/components/ui/button";
 
 const RECENT_KEY = "dasii.recent-searches";
@@ -200,48 +198,12 @@ function SearchResults({ products }: { products: SearchProduct[] }) {
     );
   }
   return (
-    <ul className="flex flex-col">
-      {products.map((p) => {
-        const avg = p.reviewAvg != null ? Number(p.reviewAvg) : null;
-        const count = Number(p.reviewCount);
-        const hasRating = avg != null && Number.isFinite(avg) && count > 0;
-        return (
-          <li key={p.id}>
-            <Link href={`/products/${p.id}`} className="flex gap-3 px-4 py-3">
-              <div className="relative size-20 shrink-0 overflow-hidden rounded-lg bg-muted">
-                {p.image ? (
-                  <Image
-                    src={p.image}
-                    alt={p.name}
-                    fill
-                    sizes="80px"
-                    className="object-cover"
-                  />
-                ) : (
-                  <Placeholder label={p.name} className="absolute inset-0" />
-                )}
-              </div>
-              <div className="flex flex-1 flex-col justify-center gap-0.5">
-                <span className="line-clamp-1 text-xs text-muted-foreground">
-                  {p.company}
-                </span>
-                <span className="line-clamp-2 text-sm font-semibold">{p.name}</span>
-                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Star className="size-3 fill-yellow-400 stroke-yellow-400" />
-                  {hasRating ? (
-                    <>
-                      <span>{avg.toFixed(2)}</span>
-                      <span>({count.toLocaleString()})</span>
-                    </>
-                  ) : (
-                    <span>리뷰 없음</span>
-                  )}
-                </div>
-              </div>
-            </Link>
-          </li>
-        );
-      })}
+    <ul className="flex flex-col divide-y divide-gray100">
+      {products.map((p) => (
+        <li key={p.id}>
+          <ProductListRow product={p as unknown as Product} />
+        </li>
+      ))}
     </ul>
   );
 }
