@@ -6,8 +6,8 @@ import Link from "next/link";
 import type { Banner } from "@/types/models";
 
 const BANNER_AUTO_INTERVAL_MS = 5000;
-const BANNER_WIDTH_RATIO = 0.90;
-const BANNER_GAP_PX = 8;
+const BANNER_WIDTH_RATIO = 0.88;
+const BANNER_GAP_PX = 6;
 const SCROLL_SETTLE_FALLBACK_MS = 1200;
 
 interface BannerSliderProps {
@@ -210,7 +210,7 @@ export function BannerSlider({ banners }: BannerSliderProps) {
                 alt={`배너 ${banner.order}`}
                 fill
                 sizes="(max-width: 768px) 85vw, 650px"
-                className="object-contain"
+                className="object-cover"
                 priority={dIdx === 1}
               />
               {isFocused && (

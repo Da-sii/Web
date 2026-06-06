@@ -20,11 +20,9 @@ async function MonthlyRanking() {
 export default function Home() {
   return (
     <div className="flex w-full flex-col">
-      <div className="my-[-10px]">
-        <Suspense fallback={<BannerSliderSkeleton />}>
-          <BannerSection />
-        </Suspense>
-      </div>
+      <Suspense fallback={<BannerSliderSkeleton />}>
+        <BannerSection />
+      </Suspense>
       <Suspense fallback={<RankingSectionSkeleton />}>
         <MonthlyRanking />
       </Suspense>
