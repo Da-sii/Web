@@ -102,7 +102,7 @@ export function RankingSection({
   };
 
   return (
-    <section className="flex flex-col gap-3 mt-2 mb-[30px]">
+    <section className="flex flex-col gap-3 mt-2 mb-[50px]">
       <Link
         href={href}
         className="flex items-center justify-between px-6"

@@ -4,7 +4,7 @@ import { ingredientGuides } from "@/lib/mock-data";
 
 export function GuideTagSection() {
   return (
-    <section className="flex flex-col px-6 mb-8">
+    <section className="flex flex-col px-6 mb-14">
       <Link
         href="/ingredients/guides"
         className="flex items-center justify-between mb-4"
