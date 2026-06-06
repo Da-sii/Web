@@ -169,7 +169,7 @@ export function BannerSlider({ banners }: BannerSliderProps) {
     : displayIndex;
 
   return (
-    <section className="relative py-2">
+    <section className="relative">
       <div
         ref={containerRef}
         onScroll={handleScroll}
@@ -202,7 +202,7 @@ export function BannerSlider({ banners }: BannerSliderProps) {
               className="relative block aspect-square flex-shrink-0 snap-center overflow-hidden rounded-2xl bg-muted transition-transform duration-300"
               style={{
                 width: `${BANNER_WIDTH_RATIO * 100}%`,
-                transform: isFocused ? "scale(1)" : "scale(0.94)",
+                transform: isFocused ? "scale(1)" : "scale(0.80)",
               }}
             >
               <Image
@@ -210,12 +210,12 @@ export function BannerSlider({ banners }: BannerSliderProps) {
                 alt={`배너 ${banner.order}`}
                 fill
                 sizes="(max-width: 768px) 85vw, 650px"
-                className="object-cover"
+                className="object-contain"
                 priority={dIdx === 1}
               />
               {isFocused && (
                 <span
-                  className="absolute top-3 right-3 rounded-full bg-black/50 px-3 py-1 text-xs font-medium text-white"
+                  className="absolute top-5 right-5 rounded-full bg-black/40 px-4 py-1 text-sm font-bold text-white"
                   aria-label={`현재 ${logicalIndex + 1}번째 배너, 총 ${total}개`}
                 >
                   {logicalIndex + 1}/{total}

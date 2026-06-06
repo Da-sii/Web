@@ -102,12 +102,12 @@ export function RankingSection({
   };
 
   return (
-    <section className="flex flex-col gap-3 py-4">
+    <section className="flex flex-col gap-3 mt-2 mb-[30px]">
       <Link
         href={href}
-        className="flex items-center justify-between px-4"
+        className="flex items-center justify-between px-6"
       >
-        <h2 className="text-base font-bold">{title}</h2>
+        <h2 className="text-lg font-extrabold">{title}</h2>
         <Icon icon="IC_ArrowRight" size="lg" className="text-muted-foreground" />
       </Link>
       <div
@@ -117,9 +117,9 @@ export function RankingSection({
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
         onClickCapture={handleClickCapture}
-        className="no-scrollbar cursor-grab touch-pan-y overflow-x-auto px-4 active:cursor-grabbing"
+        className="no-scrollbar cursor-grab touch-pan-y overflow-x-auto px-6 active:cursor-grabbing"
       >
-        <div className="flex w-max gap-3">
+        <div className="flex w-max gap-2">
           {items.map((product, index) => (
             <RankingCard
               key={product.id}
