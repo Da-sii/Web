@@ -100,14 +100,14 @@ export function SearchPage({ initialWord = "", results = null }: SearchPageProps
             aria-label="검색어"
             autoFocus
             enterKeyHint="search"
-            className="h-11 w-full rounded-full border-0 bg-gray50 pr-12 pl-4 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/30"
+            className="h-11 w-full rounded-full border-0 bg-gray50 pr-12 pl-4 text-sm outline-none placeholder:text-gray300 focus-visible:ring-2 focus-visible:ring-ring/30"
           />
           <Button
             type="submit"
             variant="ghost"
             size="icon-lg"
             aria-label="검색"
-            className="absolute top-1/2 right-1 -translate-y-1/2"
+            className="absolute top-1/2 right-1 -translate-y-1/2 text-gray300"
           >
             <Icon icon="IC_Search" size="lg" />
           </Button>

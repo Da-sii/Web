@@ -25,7 +25,7 @@ export function Bottom() {
           {businessInfo.map(({ label, value }) => (
             <div key={label} className="contents">
               <dt className="text-gray-400">{label}</dt>
-              <dd className="text-gray-600 break-all">{value}</dd>
+              <dd className="text-gray-400 break-all">{value}</dd>
             </div>
           ))}
         </dl>

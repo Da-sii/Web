@@ -19,7 +19,7 @@ export function GuideTagSection() {
             href={`/ingredients/guides/${guide.id}`}
             className="rounded-full border-[0.5px] border-gray100 bg-white px-3 py-1 text-sm text-gray700"
           >
-            #{guide.name}
+            {guide.name}
           </Link>
         ))}
       </div>
