@@ -12,7 +12,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const hasRating = avg !== null && Number.isFinite(avg);
 
   return (
-    <Link href={`/products/${product.id}`} className="flex flex-col gap-2 bg-white">
+    <Link href={`/products/${product.id}`} className="flex flex-col gap-2">
       <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-box">
         {product.image ? (
           <Image
