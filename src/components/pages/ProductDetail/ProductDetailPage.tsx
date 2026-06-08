@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import type { ProductDetail } from "@/types/models";
 import { ProductHero } from "./ProductHero";
 import { IngredientTab } from "./IngredientTab";
@@ -11,19 +13,27 @@ interface ProductDetailPageProps {
   product: ProductDetail;
 }
 
+type TabValue = "ingredient" | "review";
+
 export function ProductDetailPage({ product }: ProductDetailPageProps) {
+  const [active, setActive] = useState<TabValue>("ingredient");
+
   return (
     <div className="flex w-full flex-col">
       <ProductHero product={product} />
 
-      <Tabs defaultValue="ingredient" className="w-full gap-0">
+      <Tabs
+        value={active}
+        onValueChange={(v) => setActive(v as TabValue)}
+        className="w-full gap-0"
+      >
         <TabsList
           variant="line"
           className="grid h-12 w-full grid-cols-2 rounded-none border-b border-gray100 bg-background p-0"
         >
           <TabsTrigger
             value="ingredient"
-            className="group h-full rounded-none text-sm font-semibold text-muted-foreground data-[state=active]:text-foreground"
+            className="group h-full rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
           >
             성분 정보
             <span
@@ -35,7 +45,7 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
           </TabsTrigger>
           <TabsTrigger
             value="review"
-            className="group h-full rounded-none text-sm font-semibold text-muted-foreground data-[state=active]:text-foreground"
+            className="group h-full rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
           >
             리뷰
             <span
@@ -47,12 +57,21 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="ingredient" className="m-0">
-          <IngredientTab product={product} />
-        </TabsContent>
-        <TabsContent value="review" className="m-0">
-          <ReviewTabPlaceholder />
-        </TabsContent>
+        <div className="overflow-hidden">
+          <div
+            className={cn(
+              "flex w-[200%] transition-transform duration-300 ease-in-out",
+              active === "ingredient" ? "translate-x-0" : "-translate-x-1/2"
+            )}
+          >
+            <TabsContent value="ingredient" forceMount className="m-0 w-1/2">
+              <IngredientTab product={product} />
+            </TabsContent>
+            <TabsContent value="review" forceMount className="m-0 w-1/2">
+              <ReviewTabPlaceholder />
+            </TabsContent>
+          </div>
+        </div>
       </Tabs>
 
       <CoupangFooter url={product.coupang} />

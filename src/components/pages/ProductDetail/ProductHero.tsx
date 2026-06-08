@@ -50,7 +50,7 @@ export function ProductHero({ product }: ProductHeroProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-[20%_1fr] gap-y-2 border-b-4 border-gray100 px-5 py-4 text-xs">
+      <div className="grid grid-cols-[20%_1fr] gap-y-2 border-b border-gray100 px-5 py-4 text-xs">
         {product.ranking && product.ranking.length > 0 && (
           <>
             <span className="text-muted-foreground">랭킹</span>
