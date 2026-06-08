@@ -35,6 +35,7 @@ export default async function Page({ searchParams }: PageProps) {
     <ProductsPage
       initialProducts={results}
       initialCount={count}
+      initialHasNext={next !== null}
       categories={categories}
       initialBigCategory={bigCategory}
       initialMiddleCategory={middleCategory}

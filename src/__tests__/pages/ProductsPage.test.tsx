@@ -137,6 +137,7 @@ describe("ProductsPage", () => {
       <ProductsPage
         initialProducts={mockProducts}
         initialCount={2}
+        initialHasNext={false}
         categories={mockCategories}
         initialBigCategory="다이어트"
         initialMiddleCategory=""
@@ -155,6 +156,7 @@ describe("ProductsPage", () => {
       <ProductsPage
         initialProducts={mockProducts}
         initialCount={2}
+        initialHasNext={false}
         categories={mockCategories}
         initialBigCategory="다이어트"
         initialMiddleCategory=""
@@ -172,6 +174,7 @@ describe("ProductsPage", () => {
       <ProductsPage
         initialProducts={mockProducts}
         initialCount={2}
+        initialHasNext={false}
         categories={mockCategories}
         initialBigCategory="다이어트"
         initialMiddleCategory=""

@@ -25,6 +25,7 @@ import type { Category, Product, ProductSortOption } from "@/types/models";
 interface ProductsPageProps {
   initialProducts: Product[];
   initialCount: number;
+  initialHasNext: boolean;
   categories: Category[];
   initialBigCategory: string;
   initialMiddleCategory: string;
@@ -35,6 +36,7 @@ interface ProductsPageProps {
 export function ProductsPage({
   initialProducts,
   initialCount,
+  initialHasNext,
   categories,
   initialBigCategory,
   initialMiddleCategory,
@@ -44,7 +46,7 @@ export function ProductsPage({
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [totalCount, setTotalCount] = useState(initialCount);
-  const [hasNext, setHasNext] = useState(false);
+  const [hasNext, setHasNext] = useState(initialHasNext);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
