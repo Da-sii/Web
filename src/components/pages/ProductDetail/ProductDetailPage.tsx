@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import type { ProductDetail } from "@/types/models";
@@ -17,6 +17,19 @@ type TabValue = "ingredient" | "review";
 
 export function ProductDetailPage({ product }: ProductDetailPageProps) {
   const [active, setActive] = useState<TabValue>("ingredient");
+  const triggerRefs = useRef<Partial<Record<TabValue, HTMLButtonElement | null>>>({});
+  const [indicator, setIndicator] = useState({ left: 0, width: 0 });
+
+  useEffect(() => {
+    const trigger = triggerRefs.current[active];
+    if (!trigger) return;
+    const list = trigger.closest('[data-slot="tabs-list"]') as HTMLElement | null;
+    const textSpan = trigger.querySelector('[aria-hidden="true"]') as HTMLElement | null;
+    if (!list || !textSpan) return;
+    const listRect = list.getBoundingClientRect();
+    const spanRect = textSpan.getBoundingClientRect();
+    setIndicator({ left: spanRect.left - listRect.left, width: spanRect.width });
+  }, [active]);
 
   return (
     <div className="flex w-full flex-col">
@@ -29,32 +42,41 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
       >
         <TabsList
           variant="line"
-          className="grid h-12 w-full grid-cols-2 rounded-none border-b border-gray100 bg-background p-0"
+          className="relative grid h-12 w-full grid-cols-2 rounded-none border-b border-gray100 bg-background p-0"
         >
           <TabsTrigger
             value="ingredient"
-            className="group h-full rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
+            ref={(el) => { triggerRefs.current.ingredient = el; }}
+            className="h-full rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
           >
             성분 정보
             <span
               aria-hidden
-              className="pointer-events-none absolute -bottom-px left-1/2 h-0.5 -translate-x-1/2 overflow-hidden whitespace-nowrap bg-foreground text-sm font-semibold leading-none text-transparent opacity-0 transition-opacity group-data-[state=active]:opacity-100"
+              className="pointer-events-none invisible absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-sm font-semibold"
             >
               성분 정보
             </span>
           </TabsTrigger>
           <TabsTrigger
             value="review"
-            className="group h-full rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
+            ref={(el) => { triggerRefs.current.review = el; }}
+            className="h-full rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
           >
             리뷰
             <span
               aria-hidden
-              className="pointer-events-none absolute -bottom-px left-1/2 h-0.5 -translate-x-1/2 overflow-hidden whitespace-nowrap bg-foreground text-sm font-semibold leading-none text-transparent opacity-0 transition-opacity group-data-[state=active]:opacity-100"
+              className="pointer-events-none invisible absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-sm font-semibold"
             >
               리뷰
             </span>
           </TabsTrigger>
+
+          {/* 단일 슬라이딩 indicator */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -bottom-px h-0.5 bg-foreground transition-[left,width] duration-300 ease-in-out"
+            style={{ left: indicator.left, width: indicator.width }}
+          />
         </TabsList>
 
         <div className="overflow-hidden">
