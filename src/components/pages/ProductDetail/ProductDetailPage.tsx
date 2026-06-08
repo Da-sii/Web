@@ -47,7 +47,7 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
           <TabsTrigger
             value="ingredient"
             ref={(el) => { triggerRefs.current.ingredient = el; }}
-            className="rounded-none py-3 text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
+            className="h-auto rounded-none py-3 text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
           >
             성분 정보
             <span
@@ -60,7 +60,7 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
           <TabsTrigger
             value="review"
             ref={(el) => { triggerRefs.current.review = el; }}
-            className="rounded-none py-3 text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
+            className="h-auto rounded-none py-3 text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
           >
             리뷰
             <span
