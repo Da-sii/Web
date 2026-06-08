@@ -7,7 +7,7 @@ import type { Banner } from "@/types/models";
 
 const BANNER_AUTO_INTERVAL_MS = 5000;
 const BANNER_WIDTH_RATIO = 0.88;
-const BANNER_GAP_PX = 16;
+const BANNER_GAP_PX = 0;
 const SCROLL_SETTLE_FALLBACK_MS = 1200;
 
 interface BannerSliderProps {
