@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader2 } from "lucide-react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { fetchProducts } from "@/lib/api";
 import { cn } from "@/lib/utils";
@@ -340,7 +340,9 @@ export function ProductsPage({
       {/* Infinite scroll sentinel */}
       <div ref={sentinelRef} className="h-1" />
       {loadingMore && (
-        <div className="flex justify-center py-4 text-sm text-gray400">불러오는 중...</div>
+        <div className="flex justify-center py-4">
+          <Loader2 className="size-5 animate-spin text-gray400" />
+        </div>
       )}
 
       {/* Big category dialog */}
