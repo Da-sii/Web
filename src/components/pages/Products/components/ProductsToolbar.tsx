@@ -66,6 +66,7 @@ export function ProductsToolbar({
           side="bottom"
           showCloseButton={false}
           className="rounded-t-2xl px-0 pb-8 gap-0 left-1/2! right-auto! w-full max-w-lg -translate-x-1/2"
+          overlayClassName="left-1/2! right-auto! w-full max-w-lg -translate-x-1/2"
         >
           <div className="px-6 py-4 text-sm font-semibold text-gray900">정렬</div>
           {SORT_OPTIONS.map((opt) => (
