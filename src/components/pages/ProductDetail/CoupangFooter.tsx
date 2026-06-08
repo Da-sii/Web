@@ -1,6 +1,6 @@
 "use client";
 
-import { Info } from "lucide-react";
+import { CircleHelp } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -36,7 +36,7 @@ export function CoupangFooter({ url }: CoupangFooterProps) {
             aria-label="쿠팡 파트너스 안내"
             className="flex size-9 cursor-pointer items-center justify-center rounded-full text-gray-400"
           >
-            <Info className="size-5" />
+            <CircleHelp className="size-5" />
           </button>
         </PopoverTrigger>
         <PopoverContent side="top" align="start" className="text-xs leading-5">
@@ -49,7 +49,7 @@ export function CoupangFooter({ url }: CoupangFooterProps) {
         href={safeUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex h-11 flex-1 items-center justify-center rounded-xl bg-green600 text-sm font-bold text-white"
+        className="flex h-11 flex-1 items-center justify-center rounded-xl bg-green500 text-sm font-bold text-white"
       >
         최저가 보러가기
       </a>
