@@ -63,8 +63,8 @@ export function ProductHero({ product }: ProductHeroProps) {
             </div>
           </>
         )}
-        <span className="text-muted-foreground">식품 유형</span>
-        <span>{product.productType}</span>
+        <span className="mt-2 text-muted-foreground">식품 유형</span>
+        <span className="mt-2">{product.productType}</span>
       </div>
     </section>
   );

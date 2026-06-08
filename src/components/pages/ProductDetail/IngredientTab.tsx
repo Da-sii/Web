@@ -18,7 +18,7 @@ export function IngredientTab({ product }: IngredientTabProps) {
   return (
     <div className="flex flex-col gap-8 px-5 py-6">
       {hasFunctional && (
-        <section className="flex flex-col gap-3">
+        <section className="flex flex-col gap-5">
           <header className="flex items-center gap-2">
             <h2 className="text-sm font-bold">기능성 원료</h2>
             <span className="text-sm font-semibold text-green600">

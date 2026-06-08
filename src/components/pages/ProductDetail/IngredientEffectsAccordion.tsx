@@ -41,7 +41,7 @@ export function IngredientEffectsAccordion({
         type="button"
         onClick={() => setOpen((p) => !p)}
         aria-expanded={open}
-        className="flex w-full items-center justify-between text-xs text-muted-foreground"
+        className="flex w-full items-center justify-between text-sm font-semibold text-gray900"
       >
         <span>효과 및 부작용 알아보기</span>
         <Icon
@@ -54,12 +54,12 @@ export function IngredientEffectsAccordion({
       {open && (
         <div className="mt-3 flex flex-col gap-3">
           <div className="flex gap-2">
-            <ThumbsUp className="mt-0.5 size-4 shrink-0 text-green600" />
+            <ThumbsUp className="mt-0.5 size-4 shrink-0 fill-green600 stroke-green600" />
             <BulletList items={effects} />
           </div>
-          <div className="border-t border-dashed border-gray200" />
+          <div className="border-t border-dashed border-gray100" />
           <div className="flex gap-2">
-            <ThumbsDown className="mt-0.5 size-4 shrink-0 text-[#FF3A4A]" />
+            <ThumbsDown className="mt-0.5 size-4 shrink-0 fill-[#FF3A4A] stroke-[#FF3A4A]" />
             <BulletList items={sideEffects} />
           </div>
         </div>

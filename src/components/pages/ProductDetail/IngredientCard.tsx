@@ -101,10 +101,16 @@ export function IngredientCard({ ingredient }: IngredientCardProps) {
         </div>
 
         <div className="flex w-[88px] flex-col items-center gap-1">
-          <span className="flex items-center gap-0.5 rounded-full bg-gray100 px-1.5 py-0.5 text-[9px] text-gray-500">
-            주성분 포함량
-            <span aria-hidden>▾</span>
-          </span>
+          <div className="flex flex-col items-center">
+            <span className="whitespace-nowrap rounded-md bg-gray100 px-1.5 py-0.5 text-[9px] text-gray-500">
+              주성분 포함량
+            </span>
+            <span
+              aria-hidden
+              className="block h-0 w-0 border-x-[5px] border-x-transparent"
+              style={{ borderTop: "4px solid var(--color-gray-100)" }}
+            />
+          </div>
           <IngredientDonut
             amount={ingredient.amount}
             maxRecommended={ingredient.maxRecommended}

@@ -39,7 +39,7 @@ export function CoupangFooter({ url }: CoupangFooterProps) {
             <CircleHelp className="size-5" />
           </button>
         </PopoverTrigger>
-        <PopoverContent side="top" align="start" className="text-xs leading-5">
+        <PopoverContent side="top" align="start" className="bg-green100 text-xs leading-5">
           쿠팡 파트너스 링크를 통해 미판매 제품을 구매할 수 있어요. (구매 시 다시가
           일정액 수수료를 받아요)
         </PopoverContent>
@@ -49,7 +49,7 @@ export function CoupangFooter({ url }: CoupangFooterProps) {
         href={safeUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex h-11 flex-1 items-center justify-center rounded-xl bg-green500 text-sm font-bold text-white"
+        className="flex h-11 flex-1 items-center justify-center rounded-xl bg-green500 text-base font-extrabold text-white"
       >
         최저가 보러가기
       </a>
