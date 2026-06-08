@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronDown } from "lucide-react";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { fetchProducts } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { ProductCard } from "@/components/commons/ProductCard";
@@ -54,6 +55,13 @@ export function ProductsPage({
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [bigCategoryDialogOpen, setBigCategoryDialogOpen] = useState(false);
 
+  // Virtual DOM refs
+  const gridDivRef = useRef<HTMLDivElement>(null);
+  const gridUlRef = useRef<HTMLUListElement>(null);
+  const scrollContainerRef = useRef<HTMLElement | null>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [scrollMargin, setScrollMargin] = useState(0);
+
   const targetCategory = useMemo(
     () => categories.find((c) => c.category === initialBigCategory),
     [categories, initialBigCategory],
@@ -72,12 +80,64 @@ export function ProductsPage({
     );
   }, [targetCategory, activeMiddle]);
 
+  // Grid rows for virtualizer (2 per row)
+  const gridRows = useMemo(() => {
+    const result: Product[][] = [];
+    for (let i = 0; i < products.length; i += 2) {
+      result.push(products.slice(i, i + 2));
+    }
+    return result;
+  }, [products]);
+
+  // Find scroll container once on mount
+  useEffect(() => {
+    scrollContainerRef.current = document.querySelector("[data-scroll-root]") as HTMLElement | null;
+  }, []);
+
+  // Recalculate scrollMargin when layout above the grid may change
+  useEffect(() => {
+    const grid = viewMode === "grid" ? gridDivRef.current : gridUlRef.current;
+    const scrollEl = scrollContainerRef.current;
+    if (!grid || !scrollEl) return;
+    setScrollMargin(
+      grid.getBoundingClientRect().top - scrollEl.getBoundingClientRect().top + scrollEl.scrollTop,
+    );
+  }, [activeMiddle, activeSmall, loading, viewMode]);
+
+  // Virtualizers (always called — React hook rules)
+  const gridVirtualizer = useVirtualizer({
+    count: gridRows.length,
+    getScrollElement: () => scrollContainerRef.current,
+    estimateSize: () => 260,
+    overscan: 3,
+    scrollMargin,
+  });
+
+  const listVirtualizer = useVirtualizer({
+    count: products.length,
+    getScrollElement: () => scrollContainerRef.current,
+    estimateSize: () => 120,
+    overscan: 5,
+    scrollMargin,
+  });
+
+  const buildUrl = useCallback(
+    (middle: string, small: string, sortOpt: ProductSortOption) => {
+      const p = new URLSearchParams();
+      if (initialBigCategory) p.set("main", initialBigCategory);
+      if (middle) p.set("middle", middle);
+      if (small) p.set("small", small);
+      if (sortOpt !== "monthly_rank") p.set("sort", sortOpt);
+      return `/products?${p.toString()}`;
+    },
+    [initialBigCategory],
+  );
+
   const refetch = useCallback(
     async (opts: {
       middle: string;
       small: string;
       sortOpt: ProductSortOption;
-      resetPage?: boolean;
     }) => {
       setLoading(true);
       try {
@@ -99,24 +159,8 @@ export function ProductsPage({
     [initialBigCategory],
   );
 
-  const handleMiddleChange = (middle: string) => {
-    setActiveMiddle(middle);
-    setActiveSmall("");
-    refetch({ middle, small: "", sortOpt: sort });
-  };
-
-  const handleSmallChange = (small: string) => {
-    const next = small === activeSmall ? "" : small;
-    setActiveSmall(next);
-    refetch({ middle: activeMiddle, small: next, sortOpt: sort });
-  };
-
-  const handleSortChange = (nextSort: ProductSortOption) => {
-    setSort(nextSort);
-    refetch({ middle: activeMiddle, small: activeSmall, sortOpt: nextSort });
-  };
-
-  const handleLoadMore = async () => {
+  const handleLoadMore = useCallback(async () => {
+    if (loadingMore) return;
     setLoadingMore(true);
     try {
       const nextPage = page + 1;
@@ -133,6 +177,40 @@ export function ProductsPage({
     } finally {
       setLoadingMore(false);
     }
+  }, [loadingMore, page, initialBigCategory, activeMiddle, activeSmall, sort]);
+
+  // Infinite scroll sentinel
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNext && !loadingMore) handleLoadMore();
+      },
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasNext, loadingMore, handleLoadMore]);
+
+  const handleMiddleChange = (middle: string) => {
+    setActiveMiddle(middle);
+    setActiveSmall("");
+    window.history.replaceState(null, "", buildUrl(middle, "", sort));
+    refetch({ middle, small: "", sortOpt: sort });
+  };
+
+  const handleSmallChange = (small: string) => {
+    const next = small === activeSmall ? "" : small;
+    setActiveSmall(next);
+    window.history.replaceState(null, "", buildUrl(activeMiddle, next, sort));
+    refetch({ middle: activeMiddle, small: next, sortOpt: sort });
+  };
+
+  const handleSortChange = (nextSort: ProductSortOption) => {
+    setSort(nextSort);
+    window.history.replaceState(null, "", buildUrl(activeMiddle, activeSmall, nextSort));
+    refetch({ middle: activeMiddle, small: activeSmall, sortOpt: nextSort });
   };
 
   const handleBigCategoryChange = (cat: string) => {
@@ -206,36 +284,61 @@ export function ProductsPage({
           <span>조금만 기다려주세요</span>
         </div>
       ) : viewMode === "grid" ? (
-        <div data-testid="product-grid" className="grid grid-cols-2 gap-3 px-4 py-3">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+        <div
+          ref={gridDivRef}
+          data-testid="product-grid"
+          style={{ height: `${gridVirtualizer.getTotalSize()}px`, position: "relative" }}
+        >
+          {gridVirtualizer.getVirtualItems().map((vRow) => (
+            <div
+              key={vRow.key}
+              data-index={vRow.index}
+              ref={gridVirtualizer.measureElement}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                transform: `translateY(${vRow.start - scrollMargin}px)`,
+              }}
+            >
+              <div className="grid grid-cols-2 gap-3 px-4 py-1.5">
+                {gridRows[vRow.index]?.map((p) => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       ) : (
-        <ul data-testid="product-list" className="flex flex-col divide-y divide-gray100">
-          {products.map((p) => (
-            <li key={p.id}>
-              <ProductListRow product={p} />
+        <ul
+          ref={gridUlRef}
+          data-testid="product-list"
+          style={{ height: `${listVirtualizer.getTotalSize()}px`, position: "relative" }}
+        >
+          {listVirtualizer.getVirtualItems().map((vItem) => (
+            <li
+              key={vItem.key}
+              data-index={vItem.index}
+              ref={listVirtualizer.measureElement}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                transform: `translateY(${vItem.start - scrollMargin}px)`,
+              }}
+            >
+              <ProductListRow product={products[vItem.index]} />
             </li>
           ))}
         </ul>
       )}
 
-      {/* Load more */}
-      {hasNext && (
-        <div className="flex justify-center py-4">
-          <button
-            type="button"
-            onClick={handleLoadMore}
-            disabled={loadingMore}
-            className={cn(
-              "rounded-full border border-gray200 px-6 py-2 text-sm text-gray700",
-              loadingMore && "opacity-50",
-            )}
-          >
-            {loadingMore ? "불러오는 중..." : "더 보기"}
-          </button>
-        </div>
+      {/* Infinite scroll sentinel */}
+      <div ref={sentinelRef} className="h-1" />
+      {loadingMore && (
+        <div className="flex justify-center py-4 text-sm text-gray400">불러오는 중...</div>
       )}
 
       {/* Big category dialog */}

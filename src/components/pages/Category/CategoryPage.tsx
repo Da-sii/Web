@@ -29,10 +29,9 @@ function MiddleCategorySection({
         <span className="text-sm font-bold text-gray900">{item.category}</span>
         <Link
           href={buildProductsUrl(bigCategory, item.category)}
-          className="flex items-center gap-0.5 text-xs text-gray400"
+          className="flex items-center"
         >
-          전체보기
-          <Icon icon="IC_ArrowRight" size="sm" />
+          <Icon icon="IC_ArrowRight" size="xs" className="text-gray900" />
         </Link>
       </div>
       <div className="mb-3 flex flex-col">

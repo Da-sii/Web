@@ -31,7 +31,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <div className="flex flex-col gap-0.5 px-0.5 pb-1">
         <span className="truncate text-xs text-gray400">{product.company}</span>
         <span className="truncate text-sm font-medium text-gray900">{product.name}</span>
-        <div className="flex items-center gap-1 text-xs">
+        <div className="flex items-center gap-1 text-[10px]">
           <span className="text-star-yellow">★</span>
           <span className="text-gray500">{hasRating ? Number(avg).toFixed(2) : "0.00"}</span>
           <span className="text-gray400">({hasRating ? count : 0})</span>

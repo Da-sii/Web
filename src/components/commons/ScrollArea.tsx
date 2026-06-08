@@ -13,6 +13,7 @@ export function ScrollArea({ children }: ScrollAreaProps) {
 
   return (
     <div
+      data-scroll-root
       className={cn(
         "flex-1 overflow-y-auto",
         showScrollbar ? "custom-scrollbar" : "no-scrollbar",

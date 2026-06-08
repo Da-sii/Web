@@ -42,7 +42,7 @@ export function ProductListRow({ product, leftBadge }: ProductListRowProps) {
           <span className="line-clamp-1 text-xs text-gray300">{product.company}</span>
           <span className="line-clamp-1 text-sm font-medium text-gray900">{product.name}</span>
         </div>
-        <div className="flex items-center gap-1 text-xs">
+        <div className="flex items-center gap-1 text-[10px]">
           <span className="text-star-yellow">★</span>
           <span className="text-gray500">{hasRating ? Number(avg).toFixed(2) : "0.00"}</span>
           <span className="text-gray400">({hasRating ? count : 0})</span>
