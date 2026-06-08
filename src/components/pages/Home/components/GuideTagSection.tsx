@@ -10,7 +10,7 @@ export function GuideTagSection() {
         className="flex items-center justify-between mb-4"
       >
         <h2 className="text-lg font-extrabold">성분 가이드</h2>
-        <Icon icon="IC_ArrowRight" size="lg" className="text-muted-foreground" />
+        <Icon icon="IC_ArrowRight" size="sm" className="text-muted-foreground" />
       </Link>
       <div className="flex flex-wrap gap-2">
         {ingredientGuides.map((guide) => (

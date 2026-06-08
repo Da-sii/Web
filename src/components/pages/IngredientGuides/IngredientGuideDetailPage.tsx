@@ -17,7 +17,7 @@ export function IngredientGuideDetailPage({ guide }: IngredientGuideDetailPagePr
         </p>
       )}
 
-      <section className="mt-8 rounded-2xl bg-green50 px-5 py-5">
+      <section className="mt-8 rounded-2xl border border-[#82E3AF]/20 bg-gradient-to-b from-[#FDFFFB] to-[#F5FDFE] px-5 py-5">
         <h2 className="text-sm font-bold">핵심 포인트</h2>
         <ul className="mt-3 flex flex-col gap-3 pl-1 text-sm leading-6">
           {guide.keyPoints.map((point, idx) => (

@@ -42,7 +42,7 @@ export function IngredientTab({ product }: IngredientTabProps) {
             {product.ingredients.map((ing, idx) => (
               <div key={idx} className="flex flex-col gap-2">
                 <IngredientCard ingredient={ing} />
-                <div className="rounded-2xl bg-[#F6F5FA] px-4 py-4">
+                <div className="rounded-xl bg-[#F6F5FA] px-4 py-4">
                   <IngredientEffectsAccordion
                     effects={ing.effect ?? []}
                     sideEffects={ing.sideEffect ?? []}

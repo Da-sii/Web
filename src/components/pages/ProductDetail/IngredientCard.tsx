@@ -53,12 +53,12 @@ export function IngredientCard({ ingredient }: IngredientCardProps) {
   const titleContent = (
     <span className="flex items-center gap-1 text-sm font-bold">
       <span>{ingredient.ingredientName}</span>
-      <Icon icon="IC_ArrowRight" size="sm" className="text-gray-400" />
+      <Icon icon="IC_ArrowRight" size="xs" className="text-gray-400" />
     </span>
   );
 
   return (
-    <div className="flex flex-col rounded-2xl bg-[#F6F5FA] px-4 py-4">
+    <div className="flex flex-col rounded-xl bg-[#F6F5FA] px-4 py-4">
       <div className="flex items-start gap-3">
         <div className="flex flex-1 flex-col gap-2">
           {ingredient.guideId ? (
@@ -108,7 +108,7 @@ export function IngredientCard({ ingredient }: IngredientCardProps) {
             <span
               aria-hidden
               className="block h-0 w-0 border-x-[5px] border-x-transparent"
-              style={{ borderTop: "4px solid var(--color-gray-100)" }}
+              style={{ borderTop: "4px solid var(--color-gray100)" }}
             />
           </div>
           <IngredientDonut
