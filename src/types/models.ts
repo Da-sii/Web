@@ -124,3 +124,19 @@ export interface ProductDetail {
   otherIngredientsCount: number;
   otherIngredients: OtherIngredient[];
 }
+
+export interface Review {
+  id: number;
+  name: string;
+  date: string;
+  isEdited: boolean;
+  content: string;
+  rating: number;
+  images: string[];
+}
+
+export interface ReviewStats {
+  totalReviews: number;
+  averageRating: number;
+  distribution: Record<string, number>;
+}

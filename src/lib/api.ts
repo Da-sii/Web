@@ -10,6 +10,8 @@ import type {
   RankingCategories,
   RankingPeriod,
   RankingProduct,
+  Review,
+  ReviewStats,
   SearchProduct,
   SearchSortOption,
 } from "@/types/models";
@@ -249,6 +251,49 @@ export interface AdvertisementInquiryPayload {
   name: string;
   contact_number: string;
   email: string;
+}
+
+export async function fetchReviewStats(productId: number): Promise<ReviewStats> {
+  const res = await fetch(buildUrl(`/review/product/${productId}/rating/`), {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) throw new Error(`Failed to fetch review stats: ${res.status}`);
+  const data = await res.json();
+  const dist = (data.rating_distribution ?? {}) as Record<string, number>;
+  const total = data.total_reviews || 0;
+  const distribution: Record<string, number> = {};
+  for (const key of ["1", "2", "3", "4", "5"]) {
+    distribution[key] = total > 0 ? Math.round(((dist[key] ?? 0) / total) * 100) : 0;
+  }
+  return {
+    totalReviews: total,
+    averageRating: data.average_rating ?? 0,
+    distribution,
+  };
+}
+
+export async function fetchReviews(productId: number, cursor = 0): Promise<Review[]> {
+  const res = await fetch(buildUrl(`/review/product/${productId}/reviews/${cursor}/`), {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) throw new Error(`Failed to fetch reviews: ${res.status}`);
+  const raw = await res.json();
+  const items: Record<string, unknown>[] = Array.isArray(raw)
+    ? raw
+    : Array.isArray(raw?.reviews)
+      ? Object.values(raw.reviews as Record<string, unknown>)
+      : (raw?.results ?? []);
+  return items.map((r) => ({
+    id: (r.review_id ?? r.id) as number,
+    name: (r.user_nickname ?? r.name ?? "익명") as string,
+    date: (r.date ?? "") as string,
+    isEdited: (r.updated ?? false) as boolean,
+    content: (r.review ?? r.content ?? "") as string,
+    rating: (r.rate ?? r.rating ?? 0) as number,
+    images: ((r.images ?? []) as unknown[])
+      .map((img) => (typeof img === "string" ? img : (img as { url?: string })?.url ?? ""))
+      .filter(Boolean),
+  }));
 }
 
 export async function submitAdvertisementInquiry(

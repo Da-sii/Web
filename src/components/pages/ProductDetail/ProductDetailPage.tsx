@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import type { ProductDetail } from "@/types/models";
 import { ProductHero } from "./ProductHero";
 import { IngredientTab } from "./IngredientTab";
-import { ReviewTabPlaceholder } from "./ReviewTabPlaceholder";
+import { ReviewTab } from "./ReviewTab";
 import { CoupangFooter } from "./CoupangFooter";
 
 interface ProductDetailPageProps {
@@ -90,7 +90,7 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
               <IngredientTab product={product} />
             </TabsContent>
             <TabsContent value="review" forceMount className="m-0 w-1/2">
-              <ReviewTabPlaceholder />
+              <ReviewTab product={product} />
             </TabsContent>
           </div>
         </div>
