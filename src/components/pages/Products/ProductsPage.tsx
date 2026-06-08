@@ -200,6 +200,11 @@ export function ProductsPage({
             <div key={i} className="aspect-square animate-pulse rounded-lg bg-gray50" />
           ))}
         </div>
+      ) : products.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-24 text-center text-sm text-gray400">
+          <span>제품을 준비중이에요!</span>
+          <span>조금만 기다려주세요</span>
+        </div>
       ) : viewMode === "grid" ? (
         <div data-testid="product-grid" className="grid grid-cols-2 gap-3 px-4 py-3">
           {products.map((p) => (
