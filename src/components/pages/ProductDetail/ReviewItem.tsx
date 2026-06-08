@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import type { Review } from "@/types/models";
 import { ReviewStar } from "./ReviewStar";
 
@@ -50,13 +49,13 @@ export function ReviewItem({ review }: ReviewItemProps) {
           {review.images.map((url, idx) => (
             <div
               key={idx}
-              className="relative size-[100px] shrink-0 overflow-hidden rounded-xl"
+              className="size-[100px] shrink-0 overflow-hidden rounded-xl"
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={url}
                 alt={`리뷰 이미지 ${idx + 1}`}
-                fill
-                className="object-cover"
+                className="h-full w-full object-cover"
               />
             </div>
           ))}

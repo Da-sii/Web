@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import type { ProductDetail, Review, ReviewStats as ReviewStatsType } from "@/types/models";
 import { fetchReviews, fetchReviewStats } from "@/lib/api";
 import { ReviewStats } from "./ReviewStats";
@@ -55,12 +54,14 @@ export function ReviewTab({ product }: ReviewTabProps) {
                 const isLast = idx === MAX_PHOTO_PREVIEW - 1 && extraCount > 0;
                 return (
                   <div key={idx} className="relative aspect-square overflow-hidden rounded-lg">
-                    <Image
-                      src={img.url}
-                      alt={`리뷰 사진 ${idx + 1}`}
-                      fill
-                      className="object-cover"
-                    />
+                    {img.url && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={img.url}
+                        alt={`리뷰 사진 ${idx + 1}`}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    )}
                     {isLast && (
                       <div className="absolute inset-0 flex items-center justify-center bg-black/40">
                         <span className="text-sm font-bold text-white">+{extraCount}</span>

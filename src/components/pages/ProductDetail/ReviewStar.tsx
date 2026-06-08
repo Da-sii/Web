@@ -14,7 +14,7 @@ export function ReviewStar({ rating, size = 12 }: ReviewStarProps) {
           size={size}
           className={
             n <= Math.round(rating)
-              ? "fill-green600 text-green600"
+              ? "fill-yellow-400 text-yellow-400"
               : "fill-gray-200 text-gray-200"
           }
         />
