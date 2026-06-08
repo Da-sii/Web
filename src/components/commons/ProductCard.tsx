@@ -13,7 +13,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link href={`/products/${product.id}`} className="flex flex-col gap-2 bg-white">
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg border border-gray100 bg-gray-box">
+      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-box">
         {product.image ? (
           <Image
             src={product.image}
@@ -32,15 +32,9 @@ export function ProductCard({ product }: ProductCardProps) {
         <span className="truncate text-xs text-gray400">{product.company}</span>
         <span className="truncate text-sm font-medium text-gray900">{product.name}</span>
         <div className="flex items-center gap-1 text-xs">
-          {hasRating ? (
-            <>
-              <span className="text-yellow-star">★</span>
-              <span className="text-gray500">{Number(avg).toFixed(2)}</span>
-              <span className="text-gray400">({count})</span>
-            </>
-          ) : (
-            <span className="text-gray400">리뷰 없음</span>
-          )}
+          <span className="text-star-yellow">★</span>
+          <span className="text-gray500">{hasRating ? Number(avg).toFixed(2) : "0.00"}</span>
+          <span className="text-gray400">({hasRating ? count : 0})</span>
         </div>
       </div>
     </Link>

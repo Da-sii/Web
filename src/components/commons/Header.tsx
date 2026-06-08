@@ -56,25 +56,6 @@ export function Header() {
     );
   }
 
-  if (pathname && PRODUCTS_LIST_PATTERN.test(pathname)) {
-    return (
-      <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between border-b bg-background px-4">
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => router.back()}
-          aria-label="뒤로가기"
-        >
-          <Icon icon="IC_ArrowLeft" size="md" />
-        </Button>
-        <Link href="/search" aria-label="검색">
-          <Icon icon="IC_Search" size="md" />
-        </Link>
-      </header>
-    );
-  }
-
   if (pathname && INQUIRY_PATTERN.test(pathname)) {
     return (
       <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center bg-background px-4">

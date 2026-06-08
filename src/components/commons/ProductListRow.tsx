@@ -14,13 +14,13 @@ export function ProductListRow({ product, leftBadge }: ProductListRowProps) {
 
   return (
     <Link href={`/products/${product.id}`} className="flex gap-3 px-4 py-3">
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-gray100 bg-gray-box">
+      <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-lg border border-gray100 bg-gray-box">
         {product.image ? (
           <Image
             src={product.image}
             alt={product.name}
             fill
-            sizes="80px"
+            sizes="96px"
             className="object-cover"
           />
         ) : (
@@ -37,19 +37,15 @@ export function ProductListRow({ product, leftBadge }: ProductListRowProps) {
           </div>
         )}
       </div>
-      <div className="flex flex-1 flex-col justify-center gap-0.5">
-        <span className="line-clamp-1 text-xs text-gray300">{product.company}</span>
-        <span className="line-clamp-1 text-sm font-bold text-gray900">{product.name}</span>
+      <div className="flex flex-1 flex-col justify-between py-0.5">
+        <div className="flex flex-col gap-1.5">
+          <span className="line-clamp-1 text-xs text-gray300">{product.company}</span>
+          <span className="line-clamp-1 text-sm font-medium text-gray900">{product.name}</span>
+        </div>
         <div className="flex items-center gap-1 text-xs">
-          {hasRating ? (
-            <>
-              <span className="text-yellow-star">★</span>
-              <span className="text-gray500">{Number(avg).toFixed(2)}</span>
-              <span className="text-gray400">({count})</span>
-            </>
-          ) : (
-            <span className="text-gray400">리뷰 없음</span>
-          )}
+          <span className="text-star-yellow">★</span>
+          <span className="text-gray500">{hasRating ? Number(avg).toFixed(2) : "0.00"}</span>
+          <span className="text-gray400">({hasRating ? count : 0})</span>
         </div>
       </div>
     </Link>

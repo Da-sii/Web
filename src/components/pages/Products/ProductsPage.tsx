@@ -1,12 +1,15 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChevronDown } from "lucide-react";
 import { fetchProducts } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { ProductCard } from "@/components/commons/ProductCard";
 import { ProductListRow } from "@/components/commons/ProductListRow";
+import Icon from "@/components/commons/Icon/Icon";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -139,17 +142,30 @@ export function ProductsPage({
 
   return (
     <div className="flex flex-col">
-      {/* Big category header */}
-      <div className="flex items-center justify-between border-b border-gray100 px-4 py-3">
+      {/* Merged header */}
+      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center border-b border-gray100 bg-background px-4">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          aria-label="뒤로가기"
+          className="justify-self-start"
+        >
+          <Icon icon="IC_ArrowLeft" size="md" />
+        </Button>
         <button
           type="button"
           onClick={() => setBigCategoryDialogOpen(true)}
-          className="flex items-center gap-1 text-base font-bold text-gray900"
+          className="justify-self-center flex items-center gap-1 text-base font-bold text-gray900"
         >
           {initialBigCategory || "전체"}
           <ChevronDown className="size-4" />
         </button>
-      </div>
+        <Link href="/search" aria-label="검색" className="justify-self-end">
+          <Icon icon="IC_Search" size="md" />
+        </Link>
+      </header>
 
       {/* Tab switcher */}
       {middleTabs.length > 0 && (
