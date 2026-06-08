@@ -42,12 +42,12 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
       >
         <TabsList
           variant="line"
-          className="relative grid h-16 w-full grid-cols-2 rounded-none border-b border-gray100 bg-background p-0"
+          className="relative grid h-auto w-full grid-cols-2 rounded-none border-b border-gray100 bg-background px-0 py-2"
         >
           <TabsTrigger
             value="ingredient"
             ref={(el) => { triggerRefs.current.ingredient = el; }}
-            className="h-full rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
+            className="rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
           >
             성분 정보
             <span
@@ -60,7 +60,7 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
           <TabsTrigger
             value="review"
             ref={(el) => { triggerRefs.current.review = el; }}
-            className="h-full rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
+            className="rounded-none text-sm font-semibold text-muted-foreground after:hidden data-[state=active]:text-foreground"
           >
             리뷰
             <span
