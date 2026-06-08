@@ -16,6 +16,10 @@ export function BottomBar() {
     return null;
   }
 
+  if (/^\/banners\/[^/]+$/.test(pathname)) {
+    return null;
+  }
+
   if (/^\/products\/[^/]+$/.test(pathname)) {
     return null;
   }
