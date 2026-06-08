@@ -1,3 +1,4 @@
+import { toCdnUrl } from "@/lib/cdn";
 import type {
   Banner,
   Category,
@@ -291,7 +292,7 @@ export async function fetchReviews(productId: number, cursor = 0): Promise<Revie
     content: (r.review ?? r.content ?? "") as string,
     rating: (r.rate ?? r.rating ?? 0) as number,
     images: ((r.images ?? []) as unknown[])
-      .map((img) => (typeof img === "string" ? img : (img as { url?: string })?.url ?? ""))
+      .map((img) => toCdnUrl(typeof img === "string" ? img : (img as { url?: string })?.url ?? ""))
       .filter(Boolean),
   }));
 }
