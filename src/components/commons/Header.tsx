@@ -56,6 +56,10 @@ export function Header() {
     );
   }
 
+  if (pathname && PRODUCTS_LIST_PATTERN.test(pathname)) {
+    return null;
+  }
+
   if (pathname && INQUIRY_PATTERN.test(pathname)) {
     return (
       <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center bg-background px-4">
