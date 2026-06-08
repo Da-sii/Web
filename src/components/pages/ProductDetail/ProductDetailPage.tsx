@@ -42,7 +42,7 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
       >
         <TabsList
           variant="line"
-          className="relative grid h-auto w-full grid-cols-2 rounded-none border-b border-gray100 bg-background p-0"
+          className="relative grid h-auto w-full grid-cols-2 rounded-none border-b border-gray100 bg-background p-0 group-data-horizontal/tabs:h-auto"
         >
           <TabsTrigger
             value="ingredient"
