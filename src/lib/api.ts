@@ -1,14 +1,15 @@
 import { toCdnUrl } from "@/lib/cdn";
 import type {
   Banner,
-  Category,
+  GetProductsPayload,
+  ICategory,
+  IRankingCategory,
   IngredientGuide,
   IngredientGuideDetail,
   PaginatedResponse,
   Product,
   ProductDetail,
-  ProductSortOption,
-  RankingCategories,
+  ProductListResponse,
   RankingPeriod,
   RankingProduct,
   Review,
@@ -112,6 +113,49 @@ export async function searchProducts(
   return res.json();
 }
 
+export async function fetchCategories(): Promise<ICategory[]> {
+  const res = await fetch(buildUrl("/products/category/"), {
+    next: { revalidate: 300 },
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch categories: ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function fetchRankingCategory(): Promise<IRankingCategory> {
+  const res = await fetch(buildUrl("/products/ranking/category/"), {
+    next: { revalidate: 300 },
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch ranking category: ${res.status}`);
+  }
+  return res.json();
+}
+
+export async function fetchCategoryProducts(
+  payload: GetProductsPayload,
+): Promise<ProductListResponse> {
+  const params: Record<string, string | number | undefined> = {};
+  if (payload.bigCategory) params.bigCategory = payload.bigCategory;
+  if (payload.middleCategory && payload.middleCategory !== "전체") {
+    params.middleCategory = payload.middleCategory;
+  }
+  if (payload.smallCategory && payload.smallCategory !== "전체") {
+    params.smallCategory = payload.smallCategory;
+  }
+  if (payload.sort) params.sort = payload.sort;
+  if (payload.page) params.page = payload.page;
+
+  const res = await fetch(buildUrl("/products/list/", params), {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch category products: ${res.status}`);
+  }
+  return res.json();
+}
+
 export async function fetchProductDetail(
   id: number,
 ): Promise<ProductDetail | null> {
@@ -193,48 +237,6 @@ export async function fetchIngredientGuideDetail(
     sources: sources.map((s) => s.trim()).filter((s) => s.length > 0),
     productCount: Number(data.productCount) || 0,
   };
-}
-
-export async function fetchCategories(): Promise<Category[]> {
-  const res = await fetch(buildUrl("/products/category/"), {
-    next: { revalidate: 3600 },
-  });
-  if (!res.ok) {
-    throw new Error(`Failed to fetch categories: ${res.status}`);
-  }
-  return res.json();
-}
-
-export interface FetchProductsParams {
-  bigCategory?: string;
-  middleCategory?: string;
-  smallCategory?: string;
-  sort?: ProductSortOption;
-  page?: number;
-}
-
-export async function fetchProducts(
-  params: FetchProductsParams = {},
-): Promise<PaginatedResponse<Product>> {
-  const { bigCategory, middleCategory, smallCategory, sort = "monthly_rank", page } = params;
-  const res = await fetch(
-    buildUrl("/products/list/", { bigCategory, middleCategory, smallCategory, sort, page }),
-    { next: { revalidate: 60 } },
-  );
-  if (!res.ok) {
-    throw new Error(`Failed to fetch products: ${res.status}`);
-  }
-  return res.json();
-}
-
-export async function fetchRankingCategories(): Promise<RankingCategories> {
-  const res = await fetch(buildUrl("/products/ranking/category/"), {
-    next: { revalidate: 300 },
-  });
-  if (!res.ok) {
-    throw new Error(`Failed to fetch ranking categories: ${res.status}`);
-  }
-  return res.json();
 }
 
 export type AdvertisementInquiryType = "domestic" | "global" | "other";

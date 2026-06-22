@@ -79,6 +79,34 @@ export function Header() {
     );
   }
 
+  if (pathname && CATEGORY_PATTERN.test(pathname)) {
+    return (
+      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center bg-background px-4">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.back()}
+          aria-label="뒤로가기"
+          className="justify-self-start"
+        >
+          <Icon icon="IC_ArrowLeft" size="md" />
+        </Button>
+        <h1 className="justify-self-center text-base font-semibold">카테고리</h1>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={() => router.push("/search")}
+          aria-label="검색"
+          className="justify-self-end"
+        >
+          <Icon icon="IC_Search" size="md" />
+        </Button>
+      </header>
+    );
+  }
+
   if (pathname && PRODUCT_DETAIL_PATTERN.test(pathname)) {
     return (
       <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between bg-background px-4">

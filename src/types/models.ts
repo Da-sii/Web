@@ -107,6 +107,53 @@ export interface ProductRanking {
   monthlyRank: number;
 }
 
+export interface ICategory {
+  category: string;
+  middleCategories: MiddleCategory[];
+}
+
+export interface IRankingCategoryItem {
+  bigCategory: string;
+  middleCategory: string;
+  smallCategory: string;
+}
+
+export interface IRankingCategory {
+  topSmallCategories: IRankingCategoryItem[];
+}
+
+export type ProductSort = "monthly_rank" | "review_desc";
+
+export interface GetProductsPayload {
+  bigCategory?: string;
+  middleCategory?: string;
+  smallCategory?: string;
+  sort?: ProductSort;
+  page?: number;
+}
+
+export interface GetRankingPayload {
+  category?: string;
+  period?: "daily" | "monthly";
+  page?: number;
+}
+
+export interface IProduct {
+  id: number;
+  name: string;
+  image: string;
+  company: string;
+  reviewCount: string;
+  reviewAvg: string;
+}
+
+export interface ProductListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: IProduct[];
+}
+
 export interface ProductDetail {
   id: number;
   name: string;
