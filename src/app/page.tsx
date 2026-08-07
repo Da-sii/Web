@@ -51,12 +51,12 @@ export const metadata: Metadata = {
   },
 
   // 배포 후 구글, 네이버 서치 등록
-  // verification: {
-  //   google: "todo",
-  //   other: {
-  //     "naver-site-verification": "todo",
-  //   },
-  // },
+  verification: {
+    // google: "todo",
+    other: {
+      'naver-site-verification': '5781b32ce164e322b527d7e034097eec64b8e45d',
+    },
+  },
 };
 
 export default function Page() {
