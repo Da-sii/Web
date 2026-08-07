@@ -67,7 +67,7 @@ Sync Impact Report
 - **목적**: 네이티브 앱 Dasii(다이어트 보조제 성분 분석 및 후기 서비스)로의 유도 웹 페이지
 - **기술 스택**: Next.js 16, React 19, TypeScript, Tailwind CSS 4, shadcn/ui, Radix UI
 - **대상 언어**: 한국어 (ko_KR)
-- **도메인**: linkiving.com / dasii.com
+- **도메인**: dasii.kr
 
 ## 개발 워크플로우
 
