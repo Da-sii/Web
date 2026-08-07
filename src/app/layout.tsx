@@ -5,6 +5,7 @@ import { Header } from "@/components/commons/Header";
 import { BottomBar } from "@/components/commons/BottomBar";
 import { ScrollArea } from "@/components/commons/ScrollArea";
 import { Toaster } from "@/components/ui/sonner";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
@@ -12,12 +13,17 @@ export const metadata: Metadata = {
     template: '%s - Dasii',
   },
   description: '다이어트 보조제 성분 분석 및 후기 서비스',
-  metadataBase: new URL('https://linkiving.com'),
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    types: {
+      "application/rss+xml": "/rss.xml",
+    },
+  },
   // OG (소셜 공유 미리보기)
   openGraph: {
     title: '다시 - 다이어트 보조제 성분 분석 및 후기 서비스',
     description: '다이어트 보조제 성분 분석 및 후기 서비스',
-    url: 'https://dasii.com',
+    url: SITE_URL,
     siteName: '다시',
     locale: 'ko_KR',
     type: 'website',
