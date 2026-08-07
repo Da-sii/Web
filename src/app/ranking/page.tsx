@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { fetchRanking, fetchRankingCategories } from "@/lib/api";
+import { fetchRanking, fetchRankingCategory } from "@/lib/api";
 import { RankingPage } from "@/components/pages/Ranking/RankingPage";
 import type { RankingPeriod } from "@/types/models";
 
@@ -16,7 +16,7 @@ export default async function Page({ searchParams }: PageProps) {
 
   const [{ results }, { topSmallCategories }] = await Promise.all([
     fetchRanking({ period }),
-    fetchRankingCategories(),
+    fetchRankingCategory(),
   ]);
 
   return (

@@ -151,7 +151,7 @@ export interface ProductListResponse {
   count: number;
   next: string | null;
   previous: string | null;
-  results: IProduct[];
+  results: Product[];
 }
 
 export interface ProductDetail {

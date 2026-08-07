@@ -18,14 +18,12 @@ import type {
   SearchSortOption,
 } from "@/types/models";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
-
-if (!API_BASE_URL) {
-  throw new Error("NEXT_PUBLIC_API_URL is not defined");
-}
-
 function buildUrl(path: string, params?: Record<string, string | number | undefined>) {
-  const url = new URL(path, API_BASE_URL);
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!apiBaseUrl) {
+    throw new Error("NEXT_PUBLIC_API_URL is not defined");
+  }
+  const url = new URL(path, apiBaseUrl);
   if (params) {
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined && value !== "") {
@@ -133,7 +131,7 @@ export async function fetchRankingCategory(): Promise<IRankingCategory> {
   return res.json();
 }
 
-export async function fetchCategoryProducts(
+export async function fetchProducts(
   payload: GetProductsPayload,
 ): Promise<ProductListResponse> {
   const params: Record<string, string | number | undefined> = {};
@@ -155,6 +153,8 @@ export async function fetchCategoryProducts(
   }
   return res.json();
 }
+
+export const fetchCategoryProducts = fetchProducts;
 
 export async function fetchProductDetail(
   id: number,

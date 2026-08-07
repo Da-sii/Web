@@ -11,7 +11,6 @@ export function BottomBar() {
   const isHome = pathname === "/";
   const isCategory = pathname.startsWith("/category");
   const isMypage = pathname.startsWith("/mypage");
-  const isCategory = pathname.startsWith("/category");
 
   if (pathname.startsWith("/inquiry")) {
     return null;

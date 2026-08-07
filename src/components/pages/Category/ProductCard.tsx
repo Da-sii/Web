@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star } from "lucide-react";
 import { Placeholder } from "@/components/commons/Placeholder";
-import type { IProduct } from "@/types/models";
+import type { Product } from "@/types/models";
 
 function parseRating(raw: string | number | null | undefined): number {
   const n = typeof raw === "number" ? raw : parseFloat(String(raw ?? ""));
@@ -15,7 +15,7 @@ function parseCount(raw: string | number | null | undefined): number {
 }
 
 interface ProductCardProps {
-  product: IProduct;
+  product: Product;
   view: "grid" | "list";
 }
 

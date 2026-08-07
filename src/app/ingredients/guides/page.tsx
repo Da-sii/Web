@@ -1,6 +1,8 @@
 import { fetchIngredientGuides } from "@/lib/api";
 import { IngredientGuidesPage } from "@/components/pages/IngredientGuides/IngredientGuidesPage";
 
+export const dynamic = "force-dynamic";
+
 interface PageProps {
   searchParams: Promise<{
     search?: string;

@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchCategoryProducts } from "@/lib/api";
-import type { GetProductsPayload, IProduct } from "@/types/models";
+import type { GetProductsPayload, Product } from "@/types/models";
 
 interface UseInfiniteProductsResult {
-  products: IProduct[];
+  products: Product[];
   fetchNextPage: () => void;
   hasNextPage: boolean;
   isInitialLoading: boolean;
@@ -17,7 +17,7 @@ export function useInfiniteProducts(
   payload: GetProductsPayload,
 ): UseInfiniteProductsResult {
   const enabled = !!payload.bigCategory;
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(false);

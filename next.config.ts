@@ -3,6 +3,7 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   // svg in turbopack setting
   turbopack: {
+    root: process.cwd(),
     rules: {
       '*.svg': {
         loaders: [

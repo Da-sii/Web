@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import "@/styles/globals.css";
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
 import { Header } from "@/components/commons/Header";
 import { BottomBar } from "@/components/commons/BottomBar";
 import { ScrollArea } from "@/components/commons/ScrollArea";
 import { Toaster } from "@/components/ui/sonner";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: {
@@ -59,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={cn("font-sans", geist.variable)}>
+    <html lang="ko">
       <body className="relative flex items-start bg-green50">
         <aside className="sticky top-0 flex h-screen flex-1 items-end">
           <div className="hidden md:flex flex-col items-center w-full justify-center px-6 py-20">

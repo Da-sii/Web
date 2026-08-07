@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { fetchCategories } from "@/lib/api";
 import { CategoryListClient } from "@/components/pages/Category/CategoryListClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "카테고리 상품",
 };
