@@ -27,8 +27,9 @@ export function ReviewTab({ product }: ReviewTabProps) {
   }, [product.id]);
 
   const totalReviews = stats?.totalReviews ?? product.reviewCount;
-  const photos = product.reviewImages.slice(0, MAX_PHOTO_PREVIEW);
-  const extraCount = product.reviewImages.length - MAX_PHOTO_PREVIEW;
+  const reviewImages = product.reviewImages ?? [];
+  const photos = reviewImages.slice(0, MAX_PHOTO_PREVIEW);
+  const extraCount = reviewImages.length - MAX_PHOTO_PREVIEW;
 
   return (
     <div className="flex flex-col gap-5 px-5 py-5">
@@ -86,11 +87,11 @@ export function ReviewTab({ product }: ReviewTabProps) {
               ))}
             </div>
           )}
-
-          {/* 앱 설치 유도 */}
-          <AppInstallBanner />
         </>
       )}
+
+      {/* 앱 설치 유도 — 리뷰가 0개인 제품에서도 노출되어야 한다 */}
+      <AppInstallBanner />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import type {
   PaginatedResponse,
   Product,
   ProductDetail,
+  ProductImage,
   ProductListResponse,
   RankingPeriod,
   RankingProduct,
@@ -156,6 +157,17 @@ export async function fetchProducts(
 
 export const fetchCategoryProducts = fetchProducts;
 
+/** 서버는 이미지 필드에 S3 키를 주기도 하고 절대 URL을 주기도 한다. 둘 다 CDN URL로 정규화한다. */
+function toImageList(raw: unknown): ProductImage[] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((img) =>
+      toCdnUrl(typeof img === "string" ? img : (img as { url?: string })?.url),
+    )
+    .filter(Boolean)
+    .map((url) => ({ url }));
+}
+
 export async function fetchProductDetail(
   id: number,
 ): Promise<ProductDetail | null> {
@@ -167,7 +179,15 @@ export async function fetchProductDetail(
   if (!res.ok) {
     throw new Error(`Failed to fetch product detail: ${res.status}`);
   }
-  return res.json();
+  const data = await res.json();
+  return {
+    ...data,
+    images: toImageList(data?.images),
+    reviewImages: toImageList(data?.reviewImages),
+    ranking: data?.ranking ?? [],
+    ingredients: data?.ingredients ?? [],
+    otherIngredients: data?.otherIngredients ?? [],
+  } as ProductDetail;
 }
 
 export const INGREDIENT_GUIDES_PAGE_SIZE = 10;
