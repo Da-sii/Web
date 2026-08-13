@@ -22,7 +22,7 @@ import { SubcategoryFilter } from "./components/SubcategoryFilter";
 import { ProductsToolbar } from "./components/ProductsToolbar";
 import type { Category, Product, ProductSortOption } from "@/types/models";
 
-interface ProductsPageProps {
+interface CategoryListPageProps {
   initialProducts: Product[];
   initialCount: number;
   initialHasNext: boolean;
@@ -33,7 +33,7 @@ interface ProductsPageProps {
   initialSort: ProductSortOption;
 }
 
-export function ProductsPage({
+export function CategoryListPage({
   initialProducts,
   initialCount,
   initialHasNext,
@@ -42,7 +42,7 @@ export function ProductsPage({
   initialMiddleCategory,
   initialSmallCategory,
   initialSort,
-}: ProductsPageProps) {
+}: CategoryListPageProps) {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [totalCount, setTotalCount] = useState(initialCount);
@@ -124,13 +124,13 @@ export function ProductsPage({
   });
 
   const buildUrl = useCallback(
-    (middle: string, small: string, sortOpt: ProductSortOption) => {
+    (middle: string, sub: string, sortOpt: ProductSortOption) => {
       const p = new URLSearchParams();
       if (initialBigCategory) p.set("main", initialBigCategory);
       if (middle) p.set("middle", middle);
-      if (small) p.set("small", small);
+      if (sub) p.set("sub", sub);
       if (sortOpt !== "monthly_rank") p.set("sort", sortOpt);
-      return `/products?${p.toString()}`;
+      return `/category/list?${p.toString()}`;
     },
     [initialBigCategory],
   );
@@ -217,7 +217,7 @@ export function ProductsPage({
 
   const handleBigCategoryChange = (cat: string) => {
     setBigCategoryDialogOpen(false);
-    router.push(`/products?main=${encodeURIComponent(cat)}`);
+    router.push(`/category/list?main=${encodeURIComponent(cat)}`);
   };
 
   return (

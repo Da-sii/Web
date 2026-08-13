@@ -10,10 +10,15 @@ interface CategoryPageProps {
   categories: Category[];
 }
 
-function buildProductsUrl(main: string, middle: string, small?: string): string {
+/** sub 를 생략하면 해당 중분류 "전체" 로 들어간다 (앱 goToList 와 동일). */
+function buildCategoryListUrl(
+  main: string,
+  middle: string,
+  sub?: string,
+): string {
   const params = new URLSearchParams({ main, middle });
-  if (small) params.set("small", small);
-  return `/products?${params.toString()}`;
+  if (sub) params.set("sub", sub);
+  return `/category/list?${params.toString()}`;
 }
 
 function MiddleCategorySection({
@@ -28,7 +33,7 @@ function MiddleCategorySection({
       <div className="flex items-center justify-between py-4">
         <span className="text-sm font-bold text-gray900">{item.category}</span>
         <Link
-          href={buildProductsUrl(bigCategory, item.category)}
+          href={buildCategoryListUrl(bigCategory, item.category)}
           className="flex items-center"
         >
           <Icon icon="IC_ArrowRight" size="xs" className="text-gray900" />
@@ -38,7 +43,7 @@ function MiddleCategorySection({
         {item.smallCategories.map((small) => (
           <Link
             key={small}
-            href={buildProductsUrl(bigCategory, item.category, small)}
+            href={buildCategoryListUrl(bigCategory, item.category, small)}
             className="py-2 text-sm text-gray700"
           >
             {small}

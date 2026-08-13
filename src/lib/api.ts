@@ -7,7 +7,6 @@ import type {
   IngredientGuide,
   IngredientGuideDetail,
   PaginatedResponse,
-  Product,
   ProductDetail,
   ProductImage,
   ProductListResponse,

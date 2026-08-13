@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, expect, test, vi, beforeEach } from "vitest";
-import { TabSwitcher } from "@/components/pages/Products/components/TabSwitcher";
-import { SubcategoryFilter } from "@/components/pages/Products/components/SubcategoryFilter";
-import { ProductsToolbar } from "@/components/pages/Products/components/ProductsToolbar";
-import { ProductsPage } from "@/components/pages/Products/ProductsPage";
+import { TabSwitcher } from "@/components/pages/Category/components/TabSwitcher";
+import { SubcategoryFilter } from "@/components/pages/Category/components/SubcategoryFilter";
+import { ProductsToolbar } from "@/components/pages/Category/components/ProductsToolbar";
+import { CategoryListPage } from "@/components/pages/Category/CategoryListPage";
 import type { Category, Product } from "@/types/models";
 
 vi.mock("@/lib/api", () => ({
@@ -110,31 +110,46 @@ describe("ProductsToolbar", () => {
     expect(screen.getByText("랭킹순")).toBeInTheDocument();
   });
 
-  test("뷰 토글 버튼들을 렌더한다", () => {
-    render(
+  test("뷰 토글 버튼이 현재 뷰의 반대를 가리킨다", () => {
+    const onViewModeChange = vi.fn();
+    const { rerender } = render(
       <ProductsToolbar
         totalCount={10}
         sort="monthly_rank"
         onSortChange={vi.fn()}
         viewMode="grid"
-        onViewModeChange={vi.fn()}
+        onViewModeChange={onViewModeChange}
       />,
     );
-    expect(screen.getByLabelText("그리드 뷰")).toBeInTheDocument();
-    expect(screen.getByLabelText("리스트 뷰")).toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText("리스트 뷰로 전환"));
+    expect(onViewModeChange).toHaveBeenCalledWith("list");
+
+    rerender(
+      <ProductsToolbar
+        totalCount={10}
+        sort="monthly_rank"
+        onSortChange={vi.fn()}
+        viewMode="list"
+        onViewModeChange={onViewModeChange}
+      />,
+    );
+    expect(screen.getByLabelText("그리드 뷰로 전환")).toBeInTheDocument();
   });
 });
 
-// ── ProductsPage ──────────────────────────────────────────────────────────────
+// ── CategoryListPage ──────────────────────────────────────────────────────────
+// 목록은 @tanstack/react-virtual 로 가상화되어 있다. jsdom에는 레이아웃이 없어
+// 스크롤 컨테이너 높이가 0이고 가상 아이템이 하나도 만들어지지 않으므로,
+// 여기서는 컨테이너·툴바·필터 배선만 검증한다. 카드 자체는 ProductCard.test.tsx 담당.
 
-describe("ProductsPage", () => {
+describe("CategoryListPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  test("제품들을 그리드로 렌더한다", () => {
+  test("그리드 컨테이너와 총 개수를 렌더한다", () => {
     render(
-      <ProductsPage
+      <CategoryListPage
         initialProducts={mockProducts}
         initialCount={2}
         initialHasNext={false}
@@ -145,15 +160,13 @@ describe("ProductsPage", () => {
         initialSort="monthly_rank"
       />,
     );
-    const grid = screen.getByTestId("product-grid");
-    expect(grid).toBeInTheDocument();
-    expect(screen.getByText("제품1")).toBeInTheDocument();
-    expect(screen.getByText("제품2")).toBeInTheDocument();
+    expect(screen.getByTestId("product-grid")).toBeInTheDocument();
+    expect(screen.getByText("총 2개")).toBeInTheDocument();
   });
 
   test("리스트 뷰 토글 시 product-list가 렌더된다", () => {
     render(
-      <ProductsPage
+      <CategoryListPage
         initialProducts={mockProducts}
         initialCount={2}
         initialHasNext={false}
@@ -164,14 +177,14 @@ describe("ProductsPage", () => {
         initialSort="monthly_rank"
       />,
     );
-    fireEvent.click(screen.getByLabelText("리스트 뷰"));
+    fireEvent.click(screen.getByLabelText("리스트 뷰로 전환"));
     expect(screen.getByTestId("product-list")).toBeInTheDocument();
     expect(screen.queryByTestId("product-grid")).not.toBeInTheDocument();
   });
 
   test("중분류 탭들을 렌더한다", () => {
     render(
-      <ProductsPage
+      <CategoryListPage
         initialProducts={mockProducts}
         initialCount={2}
         initialHasNext={false}

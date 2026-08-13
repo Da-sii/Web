@@ -45,8 +45,9 @@ describe("ProductListRow", () => {
     expect(screen.getByRole("link")).toHaveAttribute("href", "/products/2");
   });
 
-  test("reviewAvg가 null이면 '리뷰 없음'을 표시한다", () => {
+  test("reviewAvg가 null이면 0점 / 0건으로 표시한다", () => {
     render(<ProductListRow product={{ ...base, reviewAvg: null, reviewCount: 0 }} />);
-    expect(screen.getByText("리뷰 없음")).toBeInTheDocument();
+    expect(screen.getByText("0.00")).toBeInTheDocument();
+    expect(screen.getByText("(0)")).toBeInTheDocument();
   });
 });

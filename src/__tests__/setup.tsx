@@ -4,6 +4,22 @@ import { vi } from "vitest";
 
 process.env.NEXT_PUBLIC_API_URL = "http://test-api";
 
+// jsdom에는 IntersectionObserver가 없다 (무한스크롤 sentinel이 사용).
+if (!("IntersectionObserver" in globalThis)) {
+  class MockIntersectionObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+    takeRecords() {
+      return [];
+    }
+  }
+  Object.defineProperty(globalThis, "IntersectionObserver", {
+    writable: true,
+    value: MockIntersectionObserver,
+  });
+}
+
 vi.mock("next/image", () => ({
   default: ({
     src,

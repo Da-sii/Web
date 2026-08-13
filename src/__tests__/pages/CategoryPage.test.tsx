@@ -39,10 +39,13 @@ describe("CategoryPage", () => {
     expect(screen.queryByText("체지방 감소")).not.toBeInTheDocument();
   });
 
-  test("중분류마다 전체보기 링크를 렌더한다", () => {
-    render(<CategoryPage categories={mockCategories} />);
-    const allLinks = screen.getAllByText("전체보기");
-    expect(allLinks.length).toBeGreaterThan(0);
+  test("중분류마다 전체 보기 링크를 렌더한다", () => {
+    const { container } = render(<CategoryPage categories={mockCategories} />);
+    // 중분류 헤더의 화살표 링크 = sub 없이 해당 중분류 "전체"로 이동
+    const allLinks = container.querySelectorAll(
+      'a[href*="/category/list?"]:not([href*="sub="])',
+    );
+    expect(allLinks.length).toBe(mockCategories[0].middleCategories.length);
   });
 
   test("소분류 링크가 올바른 URL을 가진다", () => {
@@ -50,16 +53,18 @@ describe("CategoryPage", () => {
     const link = screen.getByRole("link", { name: "가르시니아" });
     expect(link).toHaveAttribute(
       "href",
-      expect.stringContaining("small=%EA%B0%80%EB%A5%B4%EC%8B%9C%EB%8B%88%EC%95%84"),
+      expect.stringContaining("sub=%EA%B0%80%EB%A5%B4%EC%8B%9C%EB%8B%88%EC%95%84"),
     );
   });
 
-  test("전체보기 링크가 올바른 URL을 가진다", () => {
-    render(<CategoryPage categories={mockCategories} />);
-    const allLinks = screen.getAllByRole("link", { name: "전체보기" });
+  test("전체 보기 링크가 /category/list 로 이동한다", () => {
+    const { container } = render(<CategoryPage categories={mockCategories} />);
+    const allLinks = container.querySelectorAll(
+      'a[href*="/category/list?"]:not([href*="sub="])',
+    );
     expect(allLinks[0]).toHaveAttribute(
       "href",
-      expect.stringContaining("/products?"),
+      expect.stringContaining("/category/list?main="),
     );
   });
 

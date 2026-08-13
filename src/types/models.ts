@@ -65,12 +65,6 @@ export interface IngredientGuideDetail {
   productCount: number;
 }
 
-export interface CategoryItem {
-  id: number;
-  name: string;
-  linkUrl: string;
-}
-
 export interface SearchProduct {
   id: number;
   name: string;

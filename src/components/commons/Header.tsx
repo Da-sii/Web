@@ -15,9 +15,10 @@ const TERMS_DETAIL_PATTERN = /^\/terms\/([^/]+)$/;
 const INQUIRY_PATTERN = /^\/inquiry(?:\/.*)?$/;
 const INGREDIENT_GUIDES_PATTERN = /^\/ingredients\/guides(?:\/[^/]+)?\/?$/;
 const PRODUCT_DETAIL_PATTERN = /^\/products\/[^/]+$/;
-const CATEGORY_PATTERN = /^\/category(?:\/.*)?$/;
+/** 카테고리 홈만. /category/list 는 페이지가 자체 헤더를 그린다. */
+const CATEGORY_PATTERN = /^\/category\/?$/;
+const CATEGORY_LIST_PATTERN = /^\/category\/list\/?$/;
 const RANKING_PATTERN = /^\/ranking(?:\/.*)?$/;
-const PRODUCTS_LIST_PATTERN = /^\/products\/?$/;
 
 export function Header() {
   const pathname = usePathname();
@@ -56,7 +57,7 @@ export function Header() {
     );
   }
 
-  if (pathname && PRODUCTS_LIST_PATTERN.test(pathname)) {
+  if (pathname && CATEGORY_LIST_PATTERN.test(pathname)) {
     return null;
   }
 
@@ -74,34 +75,6 @@ export function Header() {
           className="justify-self-end"
         >
           <X className="size-5" />
-        </Button>
-      </header>
-    );
-  }
-
-  if (pathname && CATEGORY_PATTERN.test(pathname)) {
-    return (
-      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center bg-background px-4">
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => router.back()}
-          aria-label="뒤로가기"
-          className="justify-self-start"
-        >
-          <Icon icon="IC_ArrowLeft" size="md" />
-        </Button>
-        <h1 className="justify-self-center text-base font-semibold">카테고리</h1>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => router.push("/search")}
-          aria-label="검색"
-          className="justify-self-end"
-        >
-          <Icon icon="IC_Search" size="md" />
         </Button>
       </header>
     );
