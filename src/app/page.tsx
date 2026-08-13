@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import HomePage from '../components/pages/Home/Home';
+import { JsonLd } from '@/components/commons/JsonLd';
+import { organizationJsonLd, webSiteJsonLd } from '@/lib/structured-data';
+import { SITE_URL, absoluteUrl } from '@/lib/site';
 
 export const dynamic = "force-dynamic";
 
@@ -19,8 +22,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: '다시 - 다이어트 보조제 성분 분석 및 후기 서비스',
     description: '다이어트 보조제 성분 분석 및 후기 서비스',
-    url: 'https://linkiving.com',
-    siteName: 'Linkiving',
+    url: SITE_URL,
+    siteName: '다시',
     images: [
       {
         url: '/og-image.png',
@@ -49,20 +52,18 @@ export const metadata: Metadata = {
 
   // canonical
   alternates: {
-    canonical: 'https://linkiving.com',
+    canonical: absoluteUrl('/'),
   },
 
-  // 배포 후 구글, 네이버 서치 등록
-  verification: {
-    // google: "todo",
-    other: {
-      'naver-site-verification': '5781b32ce164e322b527d7e034097eec64b8e45d',
-    },
-  },
+  // naver-site-verification 은 전 페이지에 적용되도록 layout.tsx 로 옮겼다.
 };
 
 export default function Page() {
   return (
-    <HomePage/>
+    <>
+      <JsonLd data={webSiteJsonLd()} />
+      <JsonLd data={organizationJsonLd()} />
+      <HomePage />
+    </>
   );
 }

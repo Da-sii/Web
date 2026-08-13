@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import "@/styles/globals.css";
 import { Header } from "@/components/commons/Header";
@@ -45,16 +45,32 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
   },
 
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+
+  verification: {
+    other: {
+      'naver-site-verification': '5781b32ce164e322b527d7e034097eec64b8e45d',
+    },
   },
 };
 
-export const viewport = 'width=device-width, initial-scale=1, maximum-scale=1';
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export default function RootLayout({
   children,
