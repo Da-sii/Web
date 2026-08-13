@@ -19,6 +19,7 @@ const PRODUCT_DETAIL_PATTERN = /^\/products\/[^/]+$/;
 const CATEGORY_PATTERN = /^\/category\/?$/;
 const CATEGORY_LIST_PATTERN = /^\/category\/list\/?$/;
 const RANKING_PATTERN = /^\/ranking(?:\/.*)?$/;
+const MYPAGE_PATTERN = /^\/mypage(?:\/.*)?$/;
 
 export function Header() {
   const pathname = usePathname();
@@ -59,6 +60,20 @@ export function Header() {
 
   if (pathname && CATEGORY_LIST_PATTERN.test(pathname)) {
     return null;
+  }
+
+  if (pathname && MYPAGE_PATTERN.test(pathname)) {
+    return (
+      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center border-b bg-background px-4">
+        <span aria-hidden className="justify-self-start" />
+        <h1 className="justify-self-center text-base font-semibold">
+          마이페이지
+        </h1>
+        <Link href="/search" aria-label="검색" className="justify-self-end">
+          <Icon icon="IC_Search" size="md" />
+        </Link>
+      </header>
+    );
   }
 
   if (pathname && INQUIRY_PATTERN.test(pathname)) {

@@ -6,6 +6,7 @@ import { BottomBar } from "@/components/commons/BottomBar";
 import { ScrollArea } from "@/components/commons/ScrollArea";
 import { Toaster } from "@/components/ui/sonner";
 import { SITE_URL } from "@/lib/site";
+import { ANDROID_STORE_URL, IOS_STORE_URL, STORE_QR } from "@/lib/app-store";
 
 export const metadata: Metadata = {
   title: {
@@ -92,11 +93,11 @@ export default function RootLayout({
               </span>
             </div>
             <div className="flex gap-4 lg:gap-8.75 mb-2.5">
-              <a href="https://play.google.com/store/apps/details?id=com.dasii&pcampaignid=web_share" >
-                <Image src='/images/qr_android.png' alt="플레이스토어 설치 QR" width={148} height={148} />
+              <a href={ANDROID_STORE_URL} target="_blank" rel="noopener noreferrer">
+                <Image src={STORE_QR.android} alt="플레이스토어 설치 QR" width={148} height={148} />
               </a>
-              <a href="https://apps.apple.com/kr/app/%EB%8B%A4%EC%8B%9C-%EB%8B%A4%EC%9D%B4%EC%96%B4%ED%8A%B8-%EB%B3%B4%EC%A1%B0%EC%A0%9C-%EC%84%B1%EB%B6%84-%EB%B6%84%EC%84%9D-%EB%B0%8F-%ED%9B%84%EA%B8%B0-%EC%84%9C%EB%B9%84%EC%8A%A4/id6754357876" >
-                <Image src='/images/qr_iOS.png' alt="앱스토어 설치 QR" width={148} height={148} />
+              <a href={IOS_STORE_URL} target="_blank" rel="noopener noreferrer">
+                <Image src={STORE_QR.ios} alt="앱스토어 설치 QR" width={148} height={148} />
               </a>
             </div>
             <div className="flex gap-4 lg:gap-8.75 w-full max-w-75 justify-center">
