@@ -1,7 +1,8 @@
 export interface Banner {
   id: number;
   imageUrl: string;
-  detailImageUrl: string;
+  /** 배너 상세 화면에 세로로 이어 붙일 이미지들 (order 오름차순) */
+  detailImages: string[];
   order: number;
 }
 

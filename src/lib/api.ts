@@ -35,6 +35,30 @@ function buildUrl(path: string, params?: Record<string, string | number | undefi
   return url.toString();
 }
 
+interface BannerDTO {
+  id: number;
+  image_url: string;
+  /** 구 스키마: 배너 한 장당 상세 이미지 1장, 같은 order를 가진 row가 여러 개 */
+  detail_image_url?: string | null;
+  /** 신 스키마: row 하나가 상세 이미지 전부를 배열로 들고 있음 */
+  detail_images?: Array<{
+    id: number;
+    detail_image_url: string;
+    order: number;
+  }> | null;
+  order: number;
+}
+
+function toDetailImages(b: BannerDTO): string[] {
+  const fromArray = (b.detail_images ?? [])
+    .slice()
+    .sort((x, y) => x.order - y.order)
+    .map((d) => d.detail_image_url)
+    .filter(Boolean);
+  if (fromArray.length > 0) return fromArray;
+  return b.detail_image_url ? [b.detail_image_url] : [];
+}
+
 export async function fetchBanners(): Promise<Banner[]> {
   const res = await fetch(buildUrl("/banners/"), {
     next: { revalidate: 300 },
@@ -42,17 +66,12 @@ export async function fetchBanners(): Promise<Banner[]> {
   if (!res.ok) {
     throw new Error(`Failed to fetch banners: ${res.status}`);
   }
-  const data: Array<{
-    id: number;
-    image_url: string;
-    detail_image_url: string;
-    order: number;
-  }> = await res.json();
+  const data: BannerDTO[] = await res.json();
 
   return data.map((b) => ({
     id: b.id,
     imageUrl: b.image_url,
-    detailImageUrl: b.detail_image_url,
+    detailImages: toDetailImages(b),
     order: b.order,
   }));
 }
@@ -68,8 +87,19 @@ export function dedupeMainBanners(banners: Banner[]): Banner[] {
     .sort((a, b) => a.order - b.order);
 }
 
-export function getBannerDetailImages(banners: Banner[], order: number): Banner[] {
-  return banners.filter((b) => b.order === order);
+/**
+ * 배너 상세 이미지 목록.
+ * 신 스키마에서는 해당 order의 배너 하나가 이미 전부를 들고 있고,
+ * 구 스키마에서는 같은 order의 row들이 한 장씩 나눠 갖고 있으므로 둘 다 처리한다.
+ */
+export function getBannerDetailImages(
+  banners: Banner[],
+  order: number,
+): string[] {
+  const matched = banners.filter((b) => b.order === order);
+  const first = matched[0]?.detailImages ?? [];
+  if (first.length > 1 || matched.length <= 1) return first;
+  return matched.flatMap((b) => b.detailImages);
 }
 
 export interface FetchRankingParams {
