@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { Review } from "@/types/models";
 import { ReviewStar } from "./ReviewStar";
 
@@ -49,13 +50,15 @@ export function ReviewItem({ review }: ReviewItemProps) {
           {review.images.map((url, idx) => (
             <div
               key={idx}
-              className="size-[100px] shrink-0 overflow-hidden rounded-xl"
+              className="relative size-[100px] shrink-0 overflow-hidden rounded-xl bg-gray50"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              {/* 원본은 1MB를 넘기도 한다. 100px 썸네일이므로 최적화를 거친다 */}
+              <Image
                 src={url}
                 alt={`리뷰 이미지 ${idx + 1}`}
-                className="h-full w-full object-cover"
+                fill
+                sizes="100px"
+                className="object-cover"
               />
             </div>
           ))}

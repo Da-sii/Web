@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import type { ProductDetail, Review, ReviewStats as ReviewStatsType } from "@/types/models";
 import { fetchReviews, fetchReviewStats } from "@/lib/api";
 import { ReviewStats } from "./ReviewStats";
@@ -54,13 +55,19 @@ export function ReviewTab({ product }: ReviewTabProps) {
               {photos.map((img, idx) => {
                 const isLast = idx === MAX_PHOTO_PREVIEW - 1 && extraCount > 0;
                 return (
-                  <div key={idx} className="relative aspect-square overflow-hidden rounded-lg">
+                  <div
+                    key={idx}
+                    className="relative aspect-square overflow-hidden rounded-lg bg-gray50"
+                  >
                     {img.url && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      // 원본은 1MB를 넘기도 한다. 썸네일 그리드이므로 최적화를 거친다
+                      <Image
                         src={img.url}
                         alt={`리뷰 사진 ${idx + 1}`}
-                        className="absolute inset-0 h-full w-full object-cover"
+                        fill
+                        // 폰 컬럼(max-w-lg) 안 3열 그리드
+                        sizes="(max-width: 512px) 33vw, 165px"
+                        className="object-cover"
                       />
                     )}
                     {isLast && (
