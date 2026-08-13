@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, useTransition, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import type { Product, SearchProduct } from "@/types/models";
 import Icon from "@/components/commons/Icon/Icon";
+import { useNavProgress } from "@/components/commons/NavProgress";
 import { ProductListRow } from "@/components/commons/ProductListRow";
 import { Button } from "@/components/ui/button";
 
@@ -18,6 +19,8 @@ interface SearchPageProps {
 
 export function SearchPage({ initialWord = "", results = null }: SearchPageProps) {
   const router = useRouter();
+  const setNavPending = useNavProgress();
+  const [, startTransition] = useTransition();
   const [word, setWord] = useState(initialWord);
   const [recent, setRecent] = useState<string[]>([]);
 
@@ -52,7 +55,11 @@ export function SearchPage({ initialWord = "", results = null }: SearchPageProps
   const navigateToSearch = (text: string) => {
     const trimmed = text.trim();
     if (!trimmed) return;
-    router.push(`/search?word=${encodeURIComponent(trimmed)}`);
+    // 링크 밖 이동이라 useLinkStatus가 잡지 못한다 — 상단 바에 직접 알린다.
+    setNavPending(true);
+    startTransition(() => {
+      router.push(`/search?word=${encodeURIComponent(trimmed)}`);
+    });
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

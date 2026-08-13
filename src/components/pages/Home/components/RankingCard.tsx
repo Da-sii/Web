@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { PendingLink } from "@/components/commons/NavProgress";
 import type { RankingProduct } from "@/types/models";
 import { Placeholder } from "@/components/commons/Placeholder";
 
@@ -13,7 +13,7 @@ export function RankingCard({ product, rank }: RankingCardProps) {
   const count = product.reviewCount ?? 0;
 
   return (
-    <Link
+    <PendingLink
       href={`/products/${product.id}`}
       className="flex w-32 flex-col gap-2"
     >
@@ -46,6 +46,6 @@ export function RankingCard({ product, rank }: RankingCardProps) {
           <span className="text-gray300">({count.toLocaleString()})</span>
         </div>
       </div>
-    </Link>
+    </PendingLink>
   );
 }

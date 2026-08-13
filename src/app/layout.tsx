@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import { Header } from "@/components/commons/Header";
 import { BottomBar } from "@/components/commons/BottomBar";
 import { ScrollArea } from "@/components/commons/ScrollArea";
+import { NavProgressBar, NavProgressProvider } from "@/components/commons/NavProgress";
 import { Toaster } from "@/components/ui/sonner";
 import { SITE_URL } from "@/lib/site";
 import { ANDROID_STORE_URL, IOS_STORE_URL, STORE_QR } from "@/lib/app-store";
@@ -122,11 +123,14 @@ export default function RootLayout({
             </div>
           </div>
         </aside>
-        <main className="flex flex-col w-full max-w-lg min-h-screen bg-background">
-          <Header />
-          <ScrollArea>{children}</ScrollArea>
-          <BottomBar />
-        </main>
+        <NavProgressProvider>
+          <main className="relative flex flex-col w-full max-w-lg min-h-screen bg-background">
+            <NavProgressBar />
+            <Header />
+            <ScrollArea>{children}</ScrollArea>
+            <BottomBar />
+          </main>
+        </NavProgressProvider>
         <aside className="sticky top-0 h-screen flex-1" />
         <Toaster position="bottom-center" />
       </body>

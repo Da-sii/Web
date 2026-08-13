@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function RankingSectionSkeleton() {
   return (
-    <section className="flex flex-col gap-3 py-4">
+    <section className="delay-appear flex flex-col gap-3 py-4">
       <div className="flex items-center justify-between px-4">
         <Skeleton className="h-5 w-32" />
         <Skeleton className="size-5 rounded-full" />

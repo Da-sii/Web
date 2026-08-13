@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
-import Link from "next/link";
+import { useEffect, useState, useTransition, type FormEvent } from "react";
+import { PendingLink, useNavProgress } from "@/components/commons/NavProgress";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Icon from "@/components/commons/Icon/Icon";
@@ -29,6 +29,8 @@ export function IngredientGuidesPage({
   data,
 }: IngredientGuidesPageProps) {
   const router = useRouter();
+  const setNavPending = useNavProgress();
+  const [, startTransition] = useTransition();
   const [keyword, setKeyword] = useState(initialSearch);
 
   useEffect(() => {
@@ -41,7 +43,11 @@ export function IngredientGuidesPage({
     const params = new URLSearchParams();
     if (trimmed) params.set("search", trimmed);
     const qs = params.toString();
-    router.push(qs ? `/ingredients/guides?${qs}` : "/ingredients/guides");
+    // 링크 밖 이동이라 useLinkStatus가 잡지 못한다 — 상단 바에 직접 알린다.
+    setNavPending(true);
+    startTransition(() => {
+      router.push(qs ? `/ingredients/guides?${qs}` : "/ingredients/guides");
+    });
   };
 
   const totalPages = Math.max(
@@ -117,7 +123,7 @@ export function IngredientGuidesPage({
 function IngredientRow({ id, name }: { id: number; name: string }) {
   return (
     <li>
-      <Link
+      <PendingLink
         href={`/ingredients/guides/${id}`}
         className="flex items-center justify-between px-1 py-3 text-sm"
       >
@@ -127,7 +133,7 @@ function IngredientRow({ id, name }: { id: number; name: string }) {
           size="md"
           className="text-muted-foreground"
         />
-      </Link>
+      </PendingLink>
     </li>
   );
 }
@@ -221,13 +227,13 @@ function PageLink({ href, active, disabled, ariaLabel, children }: PageLinkProps
     );
   }
   return (
-    <Link
+    <PendingLink
       href={href}
       aria-label={ariaLabel}
       aria-current={active ? "page" : undefined}
       className={className}
     >
       {children}
-    </Link>
+    </PendingLink>
   );
 }

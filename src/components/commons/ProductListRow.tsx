@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { PendingLink } from "@/components/commons/NavProgress";
 import type { Product } from "@/types/models";
 
 interface ProductListRowProps {
@@ -13,7 +13,7 @@ export function ProductListRow({ product, leftBadge }: ProductListRowProps) {
   const hasRating = avg !== null && Number.isFinite(avg);
 
   return (
-    <Link href={`/products/${product.id}`} className="flex gap-3 px-4 py-3">
+    <PendingLink href={`/products/${product.id}`} className="flex gap-3 px-4 py-3">
       <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-lg border border-gray100 bg-gray-box">
         {product.image ? (
           <Image
@@ -48,6 +48,6 @@ export function ProductListRow({ product, leftBadge }: ProductListRowProps) {
           <span className="text-gray400">({hasRating ? count : 0})</span>
         </div>
       </div>
-    </Link>
+    </PendingLink>
   );
 }

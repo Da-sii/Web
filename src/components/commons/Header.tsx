@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { PendingLink } from "@/components/commons/NavProgress";
 import { usePathname, useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { toast } from "sonner";
@@ -30,9 +30,9 @@ export function Header() {
       <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center border-b bg-background px-4">
         <span aria-hidden className="justify-self-start" />
         <h1 className="justify-self-center text-base font-semibold">카테고리</h1>
-        <Link href="/search" aria-label="검색" className="justify-self-end">
+        <PendingLink href="/search" aria-label="검색" className="justify-self-end">
           <Icon icon="IC_Search" size="md" />
-        </Link>
+        </PendingLink>
       </header>
     );
   }
@@ -51,9 +51,9 @@ export function Header() {
           <Icon icon="IC_ArrowLeft" size="md" />
         </Button>
         <h1 className="justify-self-center text-base font-semibold">랭킹</h1>
-        <Link href="/search" aria-label="검색" className="justify-self-end">
+        <PendingLink href="/search" aria-label="검색" className="justify-self-end">
           <Icon icon="IC_Search" size="md" />
-        </Link>
+        </PendingLink>
       </header>
     );
   }
@@ -69,9 +69,9 @@ export function Header() {
         <h1 className="justify-self-center text-base font-semibold">
           마이페이지
         </h1>
-        <Link href="/search" aria-label="검색" className="justify-self-end">
+        <PendingLink href="/search" aria-label="검색" className="justify-self-end">
           <Icon icon="IC_Search" size="md" />
-        </Link>
+        </PendingLink>
       </header>
     );
   }
@@ -240,7 +240,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between bg-background px-4">
-      <Link href="/" aria-label="홈으로 이동">
+      <PendingLink href="/" aria-label="홈으로 이동">
         <Image
           src="/images/logo.png"
           alt="다시 로고"
@@ -248,10 +248,10 @@ export function Header() {
           height={18}
           className="h-4.5 w-auto"
         />
-      </Link>
-      <Link href="/search" aria-label="검색">
+      </PendingLink>
+      <PendingLink href="/search" aria-label="검색">
         <Icon icon="IC_Search" size="md" />
-      </Link>
+      </PendingLink>
     </header>
   );
 }

@@ -81,15 +81,59 @@
   display: none;
 }
 
+/* components 레이어에 둬야 호출부의 Tailwind 유틸(font-semibold 등)이 이길 수 있다.
+   레이어 밖 CSS는 레이어 안 CSS를 항상 이겨서 오버라이드가 막힌다. */
 @layer components {
   /* ========== MICRO SIGN ==========
      NanumSquareNeo에 μ(U+03BC) / µ(U+00B5) 글리프가 없어 브라우저가 다른 글꼴로
-     폴백하면서 주변 글자보다 굵고 크게 보인다. μ만 시스템 폰트로 그려 굵기를 맞춘다.
-     components 레이어에 둬야 호출부의 Tailwind 유틸(font-semibold 등)이 이길 수 있다. */
+     폴백하면서 주변 글자보다 굵고 크게 보인다. μ만 시스템 폰트로 그려 굵기를 맞춘다. */
   .micro-unit {
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     font-weight: 500;
     font-size: 0.95em;
+  }
+
+  /* ========== DELAYED SKELETON ==========
+     1초 안에 끝나는 로딩에서는 스켈레톤이 아예 보이지 않게 한다.
+     타이머/state 없이 CSS만 쓰므로 서버 컴포넌트에서도 그대로 동작한다. */
+  .delay-appear {
+    opacity: 0;
+    animation: delay-appear 160ms ease-out 1s forwards;
+  }
+
+  /* ========== NAV PROGRESS BAR ==========
+     페이지 이동이 커밋되기 전 상단에서 차오르는 2px 바.
+     85%까지만 차오르고, 이동이 끝나면 컴포넌트가 언마운트된다. */
+  .nav-progress-bar {
+    animation: nav-progress 1.6s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .delay-appear {
+      animation-duration: 1ms;
+    }
+    .nav-progress-bar {
+      animation: none;
+      transform: scaleX(0.85);
+    }
+  }
+}
+
+@keyframes delay-appear {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes nav-progress {
+  0% {
+    transform: scaleX(0);
+  }
+  40% {
+    transform: scaleX(0.45);
+  }
+  100% {
+    transform: scaleX(0.85);
   }
 }
 

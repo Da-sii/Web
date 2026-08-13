@@ -1,7 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
+import { PendingLink, useNavProgress } from "@/components/commons/NavProgress";
 import { useRouter } from "next/navigation";
 import { ChevronDown, Loader2 } from "lucide-react";
 import { useVirtualizer } from "@tanstack/react-virtual";
@@ -11,6 +18,7 @@ import { ProductCard } from "@/components/commons/ProductCard";
 import { ProductListRow } from "@/components/commons/ProductListRow";
 import Icon from "@/components/commons/Icon/Icon";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
@@ -44,6 +52,8 @@ export function CategoryListPage({
   initialSort,
 }: CategoryListPageProps) {
   const router = useRouter();
+  const setNavPending = useNavProgress();
+  const [, startTransition] = useTransition();
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [totalCount, setTotalCount] = useState(initialCount);
   const [hasNext, setHasNext] = useState(initialHasNext);
@@ -217,7 +227,11 @@ export function CategoryListPage({
 
   const handleBigCategoryChange = (cat: string) => {
     setBigCategoryDialogOpen(false);
-    router.push(`/category/list?main=${encodeURIComponent(cat)}`);
+    // 링크 밖 이동이라 useLinkStatus가 잡지 못한다 — 상단 바에 직접 알린다.
+    setNavPending(true);
+    startTransition(() => {
+      router.push(`/category/list?main=${encodeURIComponent(cat)}`);
+    });
   };
 
   return (
@@ -242,9 +256,9 @@ export function CategoryListPage({
           {initialBigCategory || "전체"}
           <ChevronDown className="size-4" />
         </button>
-        <Link href="/search" aria-label="검색" className="justify-self-end">
+        <PendingLink href="/search" aria-label="검색" className="justify-self-end">
           <Icon icon="IC_Search" size="md" />
-        </Link>
+        </PendingLink>
       </header>
 
       {/* Tab switcher */}
@@ -274,10 +288,10 @@ export function CategoryListPage({
       {loading ? (
         <div
           data-testid="product-grid"
-          className="grid grid-cols-2 gap-3 px-4 py-3"
+          className="delay-appear grid grid-cols-2 gap-3 px-4 py-3"
         >
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="aspect-square animate-pulse rounded-lg bg-gray50" />
+            <Skeleton key={i} className="aspect-square rounded-lg" />
           ))}
         </div>
       ) : products.length === 0 ? (

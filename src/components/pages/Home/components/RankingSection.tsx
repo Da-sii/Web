@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
+import { PendingLink } from "@/components/commons/NavProgress";
 import type { RankingProduct } from "@/types/models";
 import Icon from "@/components/commons/Icon/Icon";
 import { RankingCard } from "./RankingCard";
@@ -103,13 +103,13 @@ export function RankingSection({
 
   return (
     <section className="flex flex-col gap-3 mt-2 mb-[50px]">
-      <Link
+      <PendingLink
         href={href}
         className="flex items-center justify-between px-6"
       >
         <h2 className="text-lg font-extrabold">{title}</h2>
         <Icon icon="IC_ArrowRight" size="sm" className="text-muted-foreground" />
-      </Link>
+      </PendingLink>
       <div
         ref={scrollRef}
         onPointerDown={handlePointerDown}

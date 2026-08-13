@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { PendingLink } from "@/components/commons/NavProgress";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Icon from "@/components/commons/Icon/Icon";
@@ -26,7 +26,7 @@ export function BottomBar() {
 
   return (
     <nav className="sticky bottom-0 z-40 flex h-16 w-full items-center justify-around border-t bg-background">
-      <Link
+      <PendingLink
         href="/category"
         aria-label="카테고리"
         className={cn(
@@ -36,8 +36,8 @@ export function BottomBar() {
       >
         <Icon icon="IC_Category" size="lg" />
         <span>카테고리</span>
-      </Link>
-      <Link
+      </PendingLink>
+      <PendingLink
         href="/"
         aria-label="홈"
         className={cn(
@@ -47,8 +47,8 @@ export function BottomBar() {
       >
         <Icon icon="IC_Home" size="lg" />
         <span>홈</span>
-      </Link>
-      <Link
+      </PendingLink>
+      <PendingLink
         href="/mypage"
         aria-label="마이페이지"
         className={cn(
@@ -58,7 +58,7 @@ export function BottomBar() {
       >
         <Icon icon="IC_Mypage" size="lg" />
         <span>마이페이지</span>
-      </Link>
+      </PendingLink>
     </nav>
   );
 }

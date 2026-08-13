@@ -53,14 +53,18 @@ vi.mock("next/link", () => ({
   default: ({
     href,
     children,
+    prefetch: _prefetch,
     ...props
   }: {
     href: string;
     children: React.ReactNode;
+    prefetch?: boolean;
     [key: string]: unknown;
   }) => (
     <a href={href} {...props}>
       {children}
     </a>
   ),
+  // 네비게이션 대기 표시(NavProgress)가 사용. 테스트에서는 항상 idle.
+  useLinkStatus: () => ({ pending: false }),
 }));

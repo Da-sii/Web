@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { PendingLink } from "@/components/commons/NavProgress";
 import type { Product } from "@/types/models";
 
 interface ProductCardProps {
@@ -12,7 +12,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const hasRating = avg !== null && Number.isFinite(avg);
 
   return (
-    <Link href={`/products/${product.id}`} className="flex flex-col gap-2">
+    <PendingLink href={`/products/${product.id}`} className="flex flex-col gap-2">
       <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-box">
         {product.image ? (
           <Image
@@ -37,6 +37,6 @@ export function ProductCard({ product }: ProductCardProps) {
           <span className="text-gray400">({hasRating ? count : 0})</span>
         </div>
       </div>
-    </Link>
+    </PendingLink>
   );
 }

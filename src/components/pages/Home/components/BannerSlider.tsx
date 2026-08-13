@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { PendingLink } from "@/components/commons/NavProgress";
 import type { Banner } from "@/types/models";
 
 const BANNER_AUTO_INTERVAL_MS = 3000;
@@ -116,7 +116,7 @@ export function BannerSlider({ banners }: BannerSliderProps) {
             const isFocused = i === displayIndex;
             const logicalPosition = loop ? i - 1 : i;
             return (
-              <Link
+              <PendingLink
                 key={`${banner.id}-${i}`}
                 href={`/banners/${banner.order}`}
                 aria-current={isFocused ? "true" : undefined}
@@ -149,7 +149,7 @@ export function BannerSlider({ banners }: BannerSliderProps) {
                     {displayNumber}/{total}
                   </span>
                 )}
-              </Link>
+              </PendingLink>
             );
           })}
         </div>

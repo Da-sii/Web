@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 import { fetchRanking } from "@/lib/api";
+import { Skeleton } from "@/components/ui/skeleton";
 import { RankingItem } from "./components/RankingItem";
 import type { RankingCategoryItem, RankingPeriod, RankingProduct } from "@/types/models";
 
@@ -121,9 +122,12 @@ export function RankingPage({ initialProducts, initialPeriod, categories }: Rank
 
       {/* list */}
       {loading ? (
-        <div className="flex flex-col">
+        <div className="delay-appear flex flex-col">
           {Array.from({ length: 10 }).map((_, i) => (
-            <div key={i} className="h-26 animate-pulse border-b border-gray100 bg-gray50 px-4 py-3" />
+            <Skeleton
+              key={i}
+              className="h-26 rounded-none border-b border-gray100"
+            />
           ))}
         </div>
       ) : (
