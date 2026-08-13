@@ -138,16 +138,17 @@ describe("ProductsToolbar", () => {
 });
 
 // ── CategoryListPage ──────────────────────────────────────────────────────────
-// 목록은 @tanstack/react-virtual 로 가상화되어 있다. jsdom에는 레이아웃이 없어
-// 스크롤 컨테이너 높이가 0이고 가상 아이템이 하나도 만들어지지 않으므로,
-// 여기서는 컨테이너·툴바·필터 배선만 검증한다. 카드 자체는 ProductCard.test.tsx 담당.
+// 목록은 @tanstack/react-virtual 로 가상화되어 있다.
+// 회귀 방지: 예전에는 존재하지 않는 [data-scroll-root] 를 스크롤 컨테이너로
+// 찾고 있어서 가상 아이템이 하나도 만들어지지 않았다(총 개수만 보이고 목록은 빈 화면).
+// 아래 두 테스트는 실제 제품이 그려지는지를 검증한다.
 
 describe("CategoryListPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  test("그리드 컨테이너와 총 개수를 렌더한다", () => {
+  test("그리드에 제품과 총 개수를 렌더한다", () => {
     render(
       <CategoryListPage
         initialProducts={mockProducts}
@@ -162,6 +163,8 @@ describe("CategoryListPage", () => {
     );
     expect(screen.getByTestId("product-grid")).toBeInTheDocument();
     expect(screen.getByText("총 2개")).toBeInTheDocument();
+    expect(screen.getByText("제품1")).toBeInTheDocument();
+    expect(screen.getByText("제품2")).toBeInTheDocument();
   });
 
   test("리스트 뷰 토글 시 product-list가 렌더된다", () => {
@@ -180,6 +183,8 @@ describe("CategoryListPage", () => {
     fireEvent.click(screen.getByLabelText("리스트 뷰로 전환"));
     expect(screen.getByTestId("product-list")).toBeInTheDocument();
     expect(screen.queryByTestId("product-grid")).not.toBeInTheDocument();
+    expect(screen.getByText("제품1")).toBeInTheDocument();
+    expect(screen.getByText("제품2")).toBeInTheDocument();
   });
 
   test("중분류 탭들을 렌더한다", () => {

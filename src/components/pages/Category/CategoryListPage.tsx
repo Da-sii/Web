@@ -11,7 +11,7 @@ import {
 import { PendingLink, useNavProgress } from "@/components/commons/NavProgress";
 import { useRouter } from "next/navigation";
 import { ChevronDown, Loader2 } from "lucide-react";
-import { useVirtualizer } from "@tanstack/react-virtual";
+import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { fetchProducts } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { ProductCard } from "@/components/commons/ProductCard";
@@ -70,7 +70,6 @@ export function CategoryListPage({
   // Virtual DOM refs
   const gridDivRef = useRef<HTMLDivElement>(null);
   const gridUlRef = useRef<HTMLUListElement>(null);
-  const scrollContainerRef = useRef<HTMLElement | null>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [scrollMargin, setScrollMargin] = useState(0);
 
@@ -101,33 +100,35 @@ export function CategoryListPage({
     return result;
   }, [products]);
 
-  // Find scroll container once on mount
-  useEffect(() => {
-    scrollContainerRef.current = document.querySelector("[data-scroll-root]") as HTMLElement | null;
-  }, []);
-
-  // Recalculate scrollMargin when layout above the grid may change
-  useEffect(() => {
+  // 페이지는 브라우저 기본 스크롤로 움직인다(a3ee9eb에서 내부 스크롤 컨테이너 제거).
+  // 그리드 시작점이 문서 상단에서 얼마나 떨어져 있는지를 scrollMargin으로 넘긴다.
+  const measureScrollMargin = useCallback(() => {
     const grid = viewMode === "grid" ? gridDivRef.current : gridUlRef.current;
-    const scrollEl = scrollContainerRef.current;
-    if (!grid || !scrollEl) return;
-    setScrollMargin(
-      grid.getBoundingClientRect().top - scrollEl.getBoundingClientRect().top + scrollEl.scrollTop,
-    );
-  }, [activeMiddle, activeSmall, loading, viewMode]);
+    if (!grid) return;
+    const top = grid.getBoundingClientRect().top + window.scrollY;
+    setScrollMargin((prev) => (Math.abs(prev - top) < 1 ? prev : top));
+  }, [viewMode]);
+
+  useEffect(() => {
+    measureScrollMargin();
+  }, [measureScrollMargin, activeMiddle, activeSmall, loading, products.length]);
+
+  // 상단 필터 높이가 바뀌면 오프셋도 바뀐다.
+  useEffect(() => {
+    window.addEventListener("resize", measureScrollMargin);
+    return () => window.removeEventListener("resize", measureScrollMargin);
+  }, [measureScrollMargin]);
 
   // Virtualizers (always called — React hook rules)
-  const gridVirtualizer = useVirtualizer({
+  const gridVirtualizer = useWindowVirtualizer({
     count: gridRows.length,
-    getScrollElement: () => scrollContainerRef.current,
     estimateSize: () => 260,
     overscan: 3,
     scrollMargin,
   });
 
-  const listVirtualizer = useVirtualizer({
+  const listVirtualizer = useWindowVirtualizer({
     count: products.length,
-    getScrollElement: () => scrollContainerRef.current,
     estimateSize: () => 120,
     overscan: 5,
     scrollMargin,
