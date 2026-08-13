@@ -2,7 +2,8 @@
 
 import { useId } from "react";
 import { cn } from "@/lib/utils";
-import { formatNumber, toMicrograms, type IngredientStatus } from "@/lib/format";
+import { FormattedAmount } from "@/components/commons/FormattedAmount";
+import { computeFillRatio, type IngredientStatus } from "@/lib/format";
 
 interface IngredientDonutProps {
   amount: string;
@@ -34,10 +35,7 @@ export function IngredientDonut({
   const STROKE_WIDTH = 11;
   const CIRC = 2 * Math.PI * RADIUS;
 
-  const ratio =
-    status === "초과"
-      ? 1
-      : Math.min(toMicrograms(amount) / (toMicrograms(maxRecommended) || 1), 1);
+  const ratio = computeFillRatio(amount, maxRecommended, status);
   const dashOffset = CIRC * (1 - ratio);
 
   return (
@@ -71,12 +69,21 @@ export function IngredientDonut({
           />
         </g>
       </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-[10px] leading-tight">
-        <span className={cn("font-bold", STATUS_TEXT[status])}>
-          {formatNumber(amount)}
-        </span>
+      {/* μ 폴백 글꼴이 섞이면 줄 상자가 커지면서 디센더가 잘리므로 leading을 고정한다 */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-[10px] leading-[14px]">
+        <FormattedAmount
+          value={amount}
+          className={cn("font-bold", STATUS_TEXT[status])}
+          microClassName="font-semibold"
+        />
         <span className="my-0.5 h-px w-4 bg-gray-300" />
-        <span className="text-gray-400">/{formatNumber(maxRecommended)}</span>
+        <span className="text-gray-400">
+          /
+          <FormattedAmount
+            value={maxRecommended}
+            microClassName="font-light"
+          />
+        </span>
       </div>
     </div>
   );

@@ -2,12 +2,9 @@
 
 import Link from "next/link";
 import Icon from "@/components/commons/Icon/Icon";
+import { FormattedAmount } from "@/components/commons/FormattedAmount";
 import { cn } from "@/lib/utils";
-import {
-  computeStatus,
-  formatNumber,
-  type IngredientStatus,
-} from "@/lib/format";
+import { computeStatus, type IngredientStatus } from "@/lib/format";
 import type { ProductIngredient } from "@/types/models";
 import { IngredientDonut } from "./IngredientDonut";
 import { GuideUnavailableDialog } from "./GuideUnavailableDialog";
@@ -84,18 +81,19 @@ export function IngredientCard({ ingredient }: IngredientCardProps) {
             </p>
           )}
 
-          <div className="flex flex-wrap items-center gap-1.5 text-xs">
+          <div className="flex flex-wrap items-center gap-1.5 text-xs leading-[18px]">
             <Pill>포함량</Pill>
-            <span className="font-semibold">
-              {formatNumber(ingredient.amount)}
-            </span>
+            <FormattedAmount
+              value={ingredient.amount}
+              className="font-semibold"
+            />
             <StatusTag status={status} />
           </div>
-          <div className="flex flex-wrap items-center gap-1.5 text-xs">
+          <div className="flex flex-wrap items-center gap-1.5 text-xs leading-[18px]">
             <Pill>적정 섭취량</Pill>
             <span className="font-semibold">
-              {formatNumber(ingredient.minRecommended)}~
-              {formatNumber(ingredient.maxRecommended)}
+              <FormattedAmount value={ingredient.minRecommended} />~
+              <FormattedAmount value={ingredient.maxRecommended} />
             </span>
           </div>
         </div>

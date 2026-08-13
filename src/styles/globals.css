@@ -81,6 +81,18 @@
   display: none;
 }
 
+@layer components {
+  /* ========== MICRO SIGN ==========
+     NanumSquareNeo에 μ(U+03BC) / µ(U+00B5) 글리프가 없어 브라우저가 다른 글꼴로
+     폴백하면서 주변 글자보다 굵고 크게 보인다. μ만 시스템 폰트로 그려 굵기를 맞춘다.
+     components 레이어에 둬야 호출부의 Tailwind 유틸(font-semibold 등)이 이길 수 있다. */
+  .micro-unit {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 0.95em;
+  }
+}
+
 /*---break--- */
 
 @theme inline {
