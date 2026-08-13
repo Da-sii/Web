@@ -6,12 +6,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { getCoupangRedirectUrl } from "@/lib/coupang";
 
 interface CoupangFooterProps {
-  url: string;
+  productId: number;
 }
 
-function normalizeUrl(raw: string): string | null {
+function normalizeUrl(raw: string | null): string | null {
   const trimmed = raw?.trim();
   if (!trimmed) return null;
   try {
@@ -23,8 +24,8 @@ function normalizeUrl(raw: string): string | null {
   }
 }
 
-export function CoupangFooter({ url }: CoupangFooterProps) {
-  const safeUrl = normalizeUrl(url);
+export function CoupangFooter({ productId }: CoupangFooterProps) {
+  const safeUrl = normalizeUrl(getCoupangRedirectUrl(productId));
   if (!safeUrl) return null;
 
   return (

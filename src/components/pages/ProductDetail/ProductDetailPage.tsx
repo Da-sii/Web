@@ -96,7 +96,7 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
         </div>
       </Tabs>
 
-      <CoupangFooter url={product.coupang} />
+      <CoupangFooter productId={product.id} />
     </div>
   );
 }

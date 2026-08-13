@@ -159,7 +159,6 @@ export interface ProductDetail {
   name: string;
   company: string;
   productType: string;
-  coupang: string;
   isMyReview: boolean;
   reviewCount: number;
   reviewAvg: number | null;
