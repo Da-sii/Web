@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import type { Review } from "@/types/models";
 import { ReviewStar } from "./ReviewStar";
+import { LockedReviewPhotoStrip } from "./LockedReviewPhotos";
 
 interface ReviewItemProps {
   review: Review;
@@ -44,26 +44,8 @@ export function ReviewItem({ review }: ReviewItemProps) {
         </button>
       ) : null}
 
-      {/* 이미지 가로 스크롤 */}
-      {review.images.length > 0 && (
-        <div className="no-scrollbar mt-3 flex gap-3 overflow-x-auto">
-          {review.images.map((url, idx) => (
-            <div
-              key={idx}
-              className="relative size-[100px] shrink-0 overflow-hidden rounded-xl bg-gray50"
-            >
-              {/* 원본은 1MB를 넘기도 한다. 100px 썸네일이므로 최적화를 거친다 */}
-              <Image
-                src={url}
-                alt={`리뷰 이미지 ${idx + 1}`}
-                fill
-                sizes="100px"
-                className="object-cover"
-              />
-            </div>
-          ))}
-        </div>
-      )}
+      {/* 사진은 웹에서 열지 않고 모자이크로만 표시한다 */}
+      <LockedReviewPhotoStrip seeds={review.images} />
     </div>
   );
 }

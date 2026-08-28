@@ -1,14 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import type { ProductDetail, Review, ReviewStats as ReviewStatsType } from "@/types/models";
 import { fetchReviews, fetchReviewStats } from "@/lib/api";
 import { ReviewStats } from "./ReviewStats";
 import { ReviewItem } from "./ReviewItem";
 import { AppInstallBanner } from "./AppInstallBanner";
-
-const MAX_PHOTO_PREVIEW = 6;
 
 interface ReviewTabProps {
   product: ProductDetail;
@@ -28,9 +25,6 @@ export function ReviewTab({ product }: ReviewTabProps) {
   }, [product.id]);
 
   const totalReviews = stats?.totalReviews ?? product.reviewCount;
-  const reviewImages = product.reviewImages ?? [];
-  const photos = reviewImages.slice(0, MAX_PHOTO_PREVIEW);
-  const extraCount = reviewImages.length - MAX_PHOTO_PREVIEW;
 
   return (
     <div className="flex flex-col gap-5 px-5 py-5">
@@ -48,38 +42,6 @@ export function ReviewTab({ product }: ReviewTabProps) {
       ) : (
         <>
           {stats && <ReviewStats stats={stats} />}
-
-          {/* 사진 그리드 */}
-          {photos.length > 0 && (
-            <div className="grid grid-cols-3 gap-1">
-              {photos.map((img, idx) => {
-                const isLast = idx === MAX_PHOTO_PREVIEW - 1 && extraCount > 0;
-                return (
-                  <div
-                    key={idx}
-                    className="relative aspect-square overflow-hidden rounded-lg bg-gray50"
-                  >
-                    {img.url && (
-                      // 원본은 1MB를 넘기도 한다. 썸네일 그리드이므로 최적화를 거친다
-                      <Image
-                        src={img.url}
-                        alt={`리뷰 사진 ${idx + 1}`}
-                        fill
-                        // 폰 컬럼(max-w-lg) 안 3열 그리드
-                        sizes="(max-width: 512px) 33vw, 165px"
-                        className="object-cover"
-                      />
-                    )}
-                    {isLast && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                        <span className="text-sm font-bold text-white">+{extraCount}</span>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
 
           {/* 구분선 */}
           {reviews.length > 0 && (
