@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { SITE_URL } from "@/lib/site";
 import { ANDROID_STORE_URL, IOS_STORE_URL, STORE_QR } from "@/lib/app-store";
 import { GoogleTagManager } from '@next/third-parties/google';
-import { TrackedStoreLink } from "@/components/commons/TrackedStoreLink";
+import { TrackedStoreLink } from "@/components/ga/TrackedStoreLink";
 
 export const metadata: Metadata = {
   title: {
