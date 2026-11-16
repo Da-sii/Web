@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { SITE_URL } from "@/lib/site";
 import { ANDROID_STORE_URL, IOS_STORE_URL, STORE_QR } from "@/lib/app-store";
 import { GoogleTagManager } from '@next/third-parties/google';
+import { TrackedStoreLink } from "@/components/commons/TrackedStoreLink";
 
 export const metadata: Metadata = {
   title: {
@@ -112,12 +113,23 @@ export default function RootLayout({
               </span>
             </div>
             <div className="flex gap-4 lg:gap-8.75 mb-2.5">
-              <a href={ANDROID_STORE_URL} target="_blank" rel="noopener noreferrer">
-                <Image src={STORE_QR.android} alt="플레이스토어 설치 QR" width={148} height={148} />
-              </a>
-              <a href={IOS_STORE_URL} target="_blank" rel="noopener noreferrer">
-                <Image src={STORE_QR.ios} alt="앱스토어 설치 QR" width={148} height={148} />
-              </a>
+              <TrackedStoreLink href={ANDROID_STORE_URL} platform="android">
+                <Image
+                  src={STORE_QR.android}
+                  alt="플레이스토어 설치 QR"
+                  width={148}
+                  height={148}
+                />
+              </TrackedStoreLink>
+
+              <TrackedStoreLink href={IOS_STORE_URL} platform="ios">
+                <Image
+                  src={STORE_QR.ios}
+                  alt="앱스토어 설치 QR"
+                  width={148}
+                  height={148}
+                />
+              </TrackedStoreLink>
             </div>
             <div className="flex gap-4 lg:gap-8.75 w-full max-w-75 justify-center">
               <span className="title-sm-extrabold flex-1 flex justify-center">Android</span>

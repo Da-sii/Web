@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/commons/JsonLd";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/structured-data";
 import { absoluteUrl } from "@/lib/site";
 import type { ProductDetail } from "@/types/models";
+import { ProductViewTracker } from "@/components/ga/ProductViewTracker";
 
 type Params = Promise<{ id: string }>;
 
@@ -83,6 +84,10 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <>
+    <ProductViewTracker
+      productId={product.id}
+      productName={product.name}
+    />
       <JsonLd data={productJsonLd(product)} />
       <JsonLd
         data={breadcrumbJsonLd([

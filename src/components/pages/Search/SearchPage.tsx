@@ -8,6 +8,7 @@ import Icon from "@/components/commons/Icon/Icon";
 import { useNavProgress } from "@/components/commons/NavProgress";
 import { ProductListRow } from "@/components/commons/ProductListRow";
 import { Button } from "@/components/ui/button";
+import { trackEvent } from '@/lib/analytics';
 
 const RECENT_KEY = "dasii.recent-searches";
 const RECENT_MAX = 10;
@@ -55,6 +56,10 @@ export function SearchPage({ initialWord = "", results = null }: SearchPageProps
   const navigateToSearch = (text: string) => {
     const trimmed = text.trim();
     if (!trimmed) return;
+
+    trackEvent('search', {
+    search_term: trimmed,
+  });
     // 링크 밖 이동이라 useLinkStatus가 잡지 못한다 — 상단 바에 직접 알린다.
     setNavPending(true);
     startTransition(() => {
