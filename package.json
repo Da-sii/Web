@@ -11,6 +11,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@next/third-parties": "^16.4.6",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-virtual": "^3.13.24",
     "class-variance-authority": "^0.7.1",

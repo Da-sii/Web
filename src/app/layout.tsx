@@ -8,6 +8,7 @@ import { NavProgressBar, NavProgressProvider } from "@/components/commons/NavPro
 import { Toaster } from "@/components/ui/sonner";
 import { SITE_URL } from "@/lib/site";
 import { ANDROID_STORE_URL, IOS_STORE_URL, STORE_QR } from "@/lib/app-store";
+import { GoogleTagManager } from '@next/third-parties/google';
 
 export const metadata: Metadata = {
   title: {
@@ -80,6 +81,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <GoogleTagManager gtmId="GTM-MHV3WLPJ" />
       <body className="relative flex items-start bg-green50">
         <aside className="sticky top-0 flex h-screen flex-1 items-end">
           <div className="hidden md:flex flex-col items-center w-full justify-center px-6 py-20">
