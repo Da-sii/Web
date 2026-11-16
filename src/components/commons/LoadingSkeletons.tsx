@@ -57,17 +57,6 @@ export function ProductRowsSkeleton({ count = 8 }: { count?: number }) {
   );
 }
 
-/** 페이지가 자체 헤더를 그리는 라우트용 (제품 목록 등) */
-export function PageHeaderSkeleton() {
-  return (
-    <div className="grid h-14 w-full grid-cols-3 items-center border-b border-gray100 px-4">
-      <Skeleton className="size-5 justify-self-start rounded-md" />
-      <Skeleton className="h-5 w-24 justify-self-center" />
-      <Skeleton className="size-5 justify-self-end rounded-md" />
-    </div>
-  );
-}
-
 export function TextLinesSkeleton({
   count = 6,
   className,

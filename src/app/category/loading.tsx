@@ -3,7 +3,7 @@ import { DelayedSkeletonScreen } from "@/components/commons/LoadingSkeletons";
 
 export default function Loading() {
   return (
-    <DelayedSkeletonScreen className="flex-row">
+    <DelayedSkeletonScreen className="h-app-body flex-row">
       {/* 대분류 레일 */}
       <div className="flex min-w-[127px] flex-col gap-1 bg-gray50 p-3">
         {Array.from({ length: 7 }).map((_, i) => (

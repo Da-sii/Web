@@ -94,11 +94,21 @@
   }
 
   /* ========== DELAYED SKELETON ==========
-     1초 안에 끝나는 로딩에서는 스켈레톤이 아예 보이지 않게 한다.
-     타이머/state 없이 CSS만 쓰므로 서버 컴포넌트에서도 그대로 동작한다. */
+     아주 빠른 이동에서만 스켈레톤이 보이지 않게 한다.
+     타이머/state 없이 CSS만 쓰므로 서버 컴포넌트에서도 그대로 동작한다.
+     1초로 두면 그동안 화면이 멈춘 것처럼 보여서 250ms 로 잡았다. */
   .delay-appear {
     opacity: 0;
-    animation: delay-appear 160ms ease-out 1s forwards;
+    animation: delay-appear 160ms ease-out 250ms forwards;
+  }
+
+  /* ========== 전체 높이 본문 ==========
+     카테고리처럼 문서 스크롤 대신 내부에서 스크롤하는 화면용.
+     main 이 min-h-screen 이라 높이가 확정되지 않아 자식의 height:100% 가
+     기준을 못 찾고 콘텐츠 높이로 주저앉는다(회색 레일이 중간에 끊기던 원인).
+     헤더 h-14(3.5rem) + 하단바 h-16(4rem) = 7.5rem 을 뺀다. */
+  .h-app-body {
+    height: calc(100dvh - 7.5rem);
   }
 
   /* ========== NAV PROGRESS BAR ==========

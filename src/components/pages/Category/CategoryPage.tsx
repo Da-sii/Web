@@ -60,7 +60,7 @@ export function CategoryPage({ categories }: CategoryPageProps) {
   const activeBig = categories[activeIndex];
 
   return (
-    <div className="flex h-full overflow-hidden">
+    <div className="flex h-app-body overflow-hidden">
       {/* 대분류 */}
       <div className="flex min-w-[127px] flex-shrink-0 flex-col overflow-y-auto bg-gray50 no-scrollbar">
         {categories.map((cat, i) => (

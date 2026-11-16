@@ -8,16 +8,14 @@ import {
   useState,
   useTransition,
 } from "react";
-import { PendingLink, useNavProgress } from "@/components/commons/NavProgress";
+import { useNavProgress } from "@/components/commons/NavProgress";
 import { useRouter } from "next/navigation";
-import { ChevronDown, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 import { fetchProducts } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { ProductCard } from "@/components/commons/ProductCard";
 import { ProductListRow } from "@/components/commons/ProductListRow";
-import Icon from "@/components/commons/Icon/Icon";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
@@ -25,6 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { CategoryListHeader } from "./components/CategoryListHeader";
 import { TabSwitcher } from "./components/TabSwitcher";
 import { SubcategoryFilter } from "./components/SubcategoryFilter";
 import { ProductsToolbar } from "./components/ProductsToolbar";
@@ -237,30 +236,11 @@ export function CategoryListPage({
 
   return (
     <div className="flex flex-col">
-      {/* Merged header */}
-      <header className="sticky top-0 z-40 grid h-14 w-full grid-cols-3 items-center border-b border-gray100 bg-background px-4">
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => router.back()}
-          aria-label="뒤로가기"
-          className="justify-self-start"
-        >
-          <Icon icon="IC_ArrowLeft" size="md" />
-        </Button>
-        <button
-          type="button"
-          onClick={() => setBigCategoryDialogOpen(true)}
-          className="justify-self-center flex items-center gap-1 text-base font-bold text-gray900"
-        >
-          {initialBigCategory || "전체"}
-          <ChevronDown className="size-4" />
-        </button>
-        <PendingLink href="/search" aria-label="검색" className="justify-self-end">
-          <Icon icon="IC_Search" size="md" />
-        </PendingLink>
-      </header>
+      {/* loading.tsx 와 같은 헤더를 쓴다 — 이동 중에도 헤더가 유지되도록 */}
+      <CategoryListHeader
+        bigCategory={initialBigCategory}
+        onTitleClick={() => setBigCategoryDialogOpen(true)}
+      />
 
       {/* Tab switcher */}
       {middleTabs.length > 0 && (
