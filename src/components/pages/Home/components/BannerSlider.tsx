@@ -137,9 +137,9 @@ export function BannerSlider({ banners }: BannerSliderProps) {
                   src={banner.imageUrl}
                   alt={`배너 ${banner.order}`}
                   fill
-                  sizes="(max-width: 768px) 78vw, 520px"
+                  sizes="(max-width: 512px) 78vw, 400px"
                   className="object-cover"
-                  priority={i === 0}
+                  loading="eager"
                 />
                 {isFocused && (
                   <span

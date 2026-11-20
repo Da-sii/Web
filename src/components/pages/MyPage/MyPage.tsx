@@ -79,6 +79,7 @@ export function MyPage() {
   return (
     <div className="flex flex-col gap-7 px-5 py-5">
       <AppInstallCard />
+      <SettingSection title="추천"><SettingLink label="내 몸에 맞는 보조제 추천" href="/recommendation" /></SettingSection>
 
       <SettingSection title="안내">
         {GUIDE_LINKS.map((item) => (

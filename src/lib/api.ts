@@ -362,3 +362,16 @@ export async function submitAdvertisementInquiry(
     throw new Error(`Failed to submit advertisement inquiry: ${res.status}`);
   }
 }
+export async function createRecommendations(
+  survey: import("./recommendation").RecommendationSurveyPayload,
+): Promise<import("./recommendation").RecommendationResponse> {
+  const res = await fetch(buildUrl("/recommendations/"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(survey),
+  });
+  if (!res.ok) {
+    throw new Error(res.status === 401 || res.status === 403 ? "guest-unavailable" : "request-failed");
+  }
+  return res.json();
+}

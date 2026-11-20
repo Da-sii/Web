@@ -16,8 +16,9 @@ export function Bottom() {
     <footer className="flex flex-col border-t px-5 py-5 items-start gap-3">
       <Image
         src="/images/logo_text.png"
-        width={50}
-        height={30}
+        width={906}
+        height={404}
+        style={{ width: 50, height: "auto" }}
         alt='로고'
       />
       <ArrowToggle label="사업자정보" variant="gray" className="w-full">

@@ -90,6 +90,8 @@ export default function RootLayout({
             <div className="relative w-full max-w-46.75 h-13.75">
               <Image
                 src="/images/logo.png"
+                loading="eager"
+                sizes="187px"
                 fill
                 alt="로고"
                 className="object-contain"

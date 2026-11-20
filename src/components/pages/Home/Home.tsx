@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Suspense } from "react";
 import { dedupeMainBanners, fetchBanners, fetchRanking } from "@/lib/api";
 import { BannerSlider } from "./components/BannerSlider";
@@ -28,6 +29,7 @@ export default function Home() {
         <MonthlyRanking />
       </Suspense>
       <DaisoSection />
+      <Link href="/recommendation" className="mx-5 mb-8 rounded-2xl bg-green50 p-5 font-bold">내 몸에 맞는 보조제 추천받기 →</Link>
       <GuideTagSection />
       <Bottom/>
     </div>

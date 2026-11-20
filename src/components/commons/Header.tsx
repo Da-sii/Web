@@ -244,9 +244,10 @@ export function Header() {
         <Image
           src="/images/logo.png"
           alt="다시 로고"
-          width={100}
-          height={18}
-          className="h-4.5 w-auto"
+          width={187}
+          height={55}
+          loading="eager"
+          style={{ height: 18, width: "auto" }}
         />
       </PendingLink>
       <PendingLink href="/search" aria-label="검색">
