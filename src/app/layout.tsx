@@ -1,3 +1,4 @@
+import { DaisoProvider } from "@/components/commons/DaisoProvider";
 import type { Metadata, Viewport } from "next";
 import Image from "next/image";
 import "@/styles/globals.css";
@@ -141,7 +142,7 @@ export default function RootLayout({
           <main className="relative flex flex-col w-full max-w-lg min-h-screen bg-background">
             <NavProgressBar />
             <Header />
-            <ScrollArea>{children}</ScrollArea>
+            <DaisoProvider><ScrollArea>{children}</ScrollArea></DaisoProvider>
             <BottomBar />
           </main>
         </NavProgressProvider>

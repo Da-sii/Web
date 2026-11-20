@@ -1,11 +1,12 @@
+import { ProductDaisoBadge } from "@/components/commons/DaisoProvider";
 import Image from "next/image";
 import { PendingLink } from "@/components/commons/NavProgress";
-import type { RankingProduct } from "@/types/models";
+import type { Product } from "@/types/models";
 import { Placeholder } from "@/components/commons/Placeholder";
 
 interface RankingCardProps {
-  product: RankingProduct;
-  rank: number;
+  product: Product;
+  rank?: number;
 }
 
 export function RankingCard({ product, rank }: RankingCardProps) {
@@ -18,6 +19,7 @@ export function RankingCard({ product, rank }: RankingCardProps) {
       className="flex w-32 flex-col gap-2"
     >
       <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-gray100 bg-gray-box">
+        <ProductDaisoBadge id={product.id} />
         {product.image ? (
           <Image
             src={product.image}
@@ -29,9 +31,9 @@ export function RankingCard({ product, rank }: RankingCardProps) {
         ) : (
           <Placeholder label={product.name} className="absolute inset-0" />
         )}
-        <span className={`absolute top-0 left-0 flex h-6 w-6 items-center justify-center rounded-br-lg text-xs font-bold text-white ${rank <= 3 ? "bg-green500" : "bg-gray400"}`}>
+        {rank !== undefined && <span className={`absolute top-0 left-0 flex h-6 w-6 items-center justify-center rounded-br-lg text-xs font-bold text-white ${rank <= 3 ? "bg-green500" : "bg-gray400"}`}>
           {rank}
-        </span>
+        </span>}
       </div>
       <div className="flex flex-col gap-0.5">
         <span className="truncate text-xs text-gray400">

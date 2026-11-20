@@ -1,8 +1,10 @@
+import { normalizeSearchKeyword } from "@/lib/daiso";
 import { toCdnUrl } from "@/lib/cdn";
 import type {
   Banner,
   GetProductsPayload,
   ICategory,
+  IProduct,
   IRankingCategory,
   IngredientGuide,
   IngredientGuideDetail,
@@ -132,7 +134,7 @@ export async function searchProducts(
 ): Promise<PaginatedResponse<SearchProduct>> {
   const { word, sort = "monthly_rank", page } = params;
   const res = await fetch(
-    buildUrl("/products/search/", { word, sort, page }),
+    buildUrl("/products/search/", { word: normalizeSearchKeyword(word), sort, page }),
     { next: { revalidate: 60 } },
   );
   if (!res.ok) {

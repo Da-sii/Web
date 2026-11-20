@@ -1,3 +1,4 @@
+import { ProductDaisoBadge } from "@/components/commons/DaisoProvider";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import type { ProductDetail, ProductImage } from "@/types/models";
@@ -22,6 +23,7 @@ export function ProductHero({ product }: ProductHeroProps) {
   return (
     <section className="flex w-full flex-col">
       <div className="relative h-[46vh] w-full bg-background">
+        <ProductDaisoBadge id={product.id} size="lg" />
         {heroUrl ? (
           <Image
             src={heroUrl}

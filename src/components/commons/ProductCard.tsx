@@ -1,3 +1,4 @@
+import { ProductDaisoBadge } from "@/components/commons/DaisoProvider";
 import Image from "next/image";
 import { PendingLink } from "@/components/commons/NavProgress";
 import type { Product } from "@/types/models";
@@ -14,6 +15,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <PendingLink href={`/products/${product.id}`} className="flex flex-col gap-2">
       <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-box">
+        <ProductDaisoBadge id={product.id} />
         {product.image ? (
           <Image
             src={product.image}

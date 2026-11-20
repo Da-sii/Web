@@ -6,6 +6,7 @@ import { RankingSection } from "./components/RankingSection";
 import { RankingSectionSkeleton } from "./components/RankingSectionSkeleton";
 import { GuideTagSection } from "./components/GuideTagSection";
 import { Bottom } from "./components/Bottom";
+import { DaisoSection } from "./components/DaisoSection";
 
 async function BannerSection() {
   const banners = await fetchBanners();
@@ -26,6 +27,7 @@ export default function Home() {
       <Suspense fallback={<RankingSectionSkeleton />}>
         <MonthlyRanking />
       </Suspense>
+      <DaisoSection />
       <GuideTagSection />
       <Bottom/>
     </div>
